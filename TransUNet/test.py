@@ -50,6 +50,7 @@ def inference(args, model, test_save_path=None):
     metric_list = 0.0
     for i_batch, sampled_batch in tqdm(enumerate(testloader)):
         h, w = sampled_batch["image"].size()[2:]
+        logging.info('height %d width %d' % (h, w))
         image, label, case_name = sampled_batch["image"], sampled_batch["label"], sampled_batch['case_name'][0]
         metric_i = test_single_volume(image, label, model, classes=args.num_classes, patch_size=[args.img_size, args.img_size],
                                       test_save_path=test_save_path, case=case_name, z_spacing=args.z_spacing)
@@ -83,6 +84,13 @@ if __name__ == "__main__":
             'volume_path': '../data/Synapse/test_vol_h5',
             'list_dir': './lists/lists_Synapse',
             'num_classes': 9,
+            'z_spacing': 1,
+        },
+        'University_dev': {
+            'Dataset': Synapse_dataset, #uses same files logic as Synapse
+            'volume_path': '../data/University_dev/test_vol_h5',
+            'list_dir': './lists/lists_University_dev',
+            'num_classes': 2,
             'z_spacing': 1,
         },
     }

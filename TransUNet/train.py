@@ -61,6 +61,12 @@ if __name__ == "__main__":
             'list_dir': './lists/lists_Synapse',
             'num_classes': 9,
         },
+        'University_dev': {
+            'root_path': '../data/University_dev/train_npz',
+            'list_dir': './lists/lists_University_dev',
+            'num_classes': 2,
+        },
+
     }
     if args.batch_size != 24 and args.batch_size % 6 == 0:
         args.base_lr *= args.batch_size / 24
@@ -91,5 +97,5 @@ if __name__ == "__main__":
     net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
     net.load_from(weights=np.load(config_vit.pretrained_path))
 
-    trainer = {'Synapse': trainer_synapse,}
+    trainer = {'Synapse': trainer_synapse,'University_dev':trainer_synapse}
     trainer[dataset_name](args, net, snapshot_path)
