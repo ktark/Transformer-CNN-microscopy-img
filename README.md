@@ -1,4 +1,22 @@
+# TransUNet project (UT project - NN)
+
+* Setting up HPC. Create python 3.7 virtual environment [https://docs.hpc.ut.ee/cluster/python_envs/](https://docs.hpc.ut.ee/cluster/python_envs/). Install all requirements  `pip install -r requirements.txt`
+* Running HPC with gpu: Use `TransUNet/start_*.sh` scripts. Note that max running time is given in parameter `SBATCH -t 01:00:00` (example 1 hour)
+* To execute job in HPC: `sbatch start_*.sh`. To monitor the execution `tail -f slurm-*.out`
+* Testing logs (and performance measures DICE, HD95) available in `TransUNet/test_log`.
+* Some example predictions available in `predictions`
+
+
+Currently executed:
+* Existing paper main model training with 150 epochs, batch size 24, image patches: 224 `Synapse`
+* Overfit small dataset of university data `University_dev`.
+* Train same model as in existing paper on full `University` dataset (training + val used for training).
+* University preprocessed dataset uploaded to Kaarel's drive. I'll share link in slack
+
+
+-----
 This is the dataset, preprocessed by TransUNet, originated from Synapse multi-organ Dataset.
+
 
 This preprocessing is implemented and introduced in the work:
 @article{chen2021transunet,

@@ -1,0 +1,1014 @@
+Namespace(Dataset=<class 'datasets.dataset_synapse.Synapse_dataset'>, base_lr=0.01, batch_size=24, dataset='University', deterministic=1, exp='TU_University224', img_size=224, is_pretrain=True, is_savenii=True, list_dir='./lists/lists_University', max_epochs=150, max_iterations=20000, n_skip=3, num_classes=2, seed=1234, test_save_dir='../predictions', vit_name='R50-ViT-B_16', vit_patches_size=16, volume_path='../data/University/test_vol_h5', z_spacing=1)
+TU_pretrain_R50-ViT-B_16_skip3_epo150_bs24_224
+504 test iterations per epoch
+0it [00:00, ?it/s]height 1080 width 1080
+idx 0 case image_0 mean_dice 0.606900 mean_hd95 15.231546
+1it [00:01,  1.94s/it]height 1080 width 1080
+idx 1 case image_1 mean_dice 0.564674 mean_hd95 20.615528
+2it [00:03,  1.51s/it]height 1080 width 1080
+idx 2 case image_2 mean_dice 0.566651 mean_hd95 21.095023
+3it [00:04,  1.37s/it]height 1080 width 1080
+idx 3 case image_3 mean_dice 0.586889 mean_hd95 21.000000
+4it [00:05,  1.28s/it]height 1080 width 1080
+idx 4 case image_4 mean_dice 0.599693 mean_hd95 16.278821
+5it [00:06,  1.22s/it]height 1080 width 1080
+idx 5 case image_5 mean_dice 0.498936 mean_hd95 28.653098
+6it [00:07,  1.18s/it]height 1080 width 1080
+idx 6 case image_6 mean_dice 0.507582 mean_hd95 25.079872
+7it [00:08,  1.16s/it]height 1080 width 1080
+idx 7 case image_7 mean_dice 0.493704 mean_hd95 30.083218
+8it [00:09,  1.16s/it]height 1080 width 1080
+idx 8 case image_8 mean_dice 0.405381 mean_hd95 37.107951
+9it [00:11,  1.15s/it]height 1080 width 1080
+idx 9 case image_9 mean_dice 0.392385 mean_hd95 45.177428
+10it [00:12,  1.14s/it]height 1080 width 1080
+idx 10 case image_10 mean_dice 0.413282 mean_hd95 40.000000
+11it [00:13,  1.13s/it]height 1080 width 1080
+idx 11 case image_11 mean_dice 0.694364 mean_hd95 9.899495
+12it [00:14,  1.13s/it]height 1080 width 1080
+idx 12 case image_12 mean_dice 0.617281 mean_hd95 18.384776
+13it [00:15,  1.13s/it]height 1080 width 1080
+idx 13 case image_13 mean_dice 0.631983 mean_hd95 22.135944
+14it [00:16,  1.11s/it]height 1080 width 1080
+idx 14 case image_14 mean_dice 0.664599 mean_hd95 12.000000
+15it [00:17,  1.13s/it]height 1080 width 1080
+idx 15 case image_15 mean_dice 0.613713 mean_hd95 18.357560
+16it [00:19,  1.14s/it]height 1080 width 1080
+idx 16 case image_16 mean_dice 0.647325 mean_hd95 13.000000
+17it [00:20,  1.14s/it]height 1080 width 1080
+idx 17 case image_17 mean_dice 0.579142 mean_hd95 25.079872
+18it [00:21,  1.11s/it]height 1080 width 1080
+idx 18 case image_18 mean_dice 0.568366 mean_hd95 17.804494
+19it [00:22,  1.12s/it]height 1080 width 1080
+idx 19 case image_19 mean_dice 0.496946 mean_hd95 21.840330
+20it [00:23,  1.13s/it]height 1080 width 1080
+idx 20 case image_20 mean_dice 0.514336 mean_hd95 20.396078
+21it [00:24,  1.13s/it]height 1080 width 1080
+idx 21 case image_21 mean_dice 0.463095 mean_hd95 23.000000
+22it [00:25,  1.15s/it]height 1080 width 1080
+idx 22 case image_22 mean_dice 0.400157 mean_hd95 23.345235
+23it [00:26,  1.13s/it]height 1080 width 1080
+idx 23 case image_23 mean_dice 0.582492 mean_hd95 16.000000
+24it [00:27,  1.11s/it]height 1080 width 1080
+idx 24 case image_24 mean_dice 0.507268 mean_hd95 14.866069
+25it [00:29,  1.16s/it]height 1080 width 1080
+idx 25 case image_25 mean_dice 0.541148 mean_hd95 14.000000
+26it [00:30,  1.18s/it]height 1080 width 1080
+idx 26 case image_26 mean_dice 0.550210 mean_hd95 12.727922
+27it [00:31,  1.23s/it]height 1080 width 1080
+idx 27 case image_27 mean_dice 0.519884 mean_hd95 13.152946
+28it [00:33,  1.24s/it]height 1080 width 1080
+idx 28 case image_28 mean_dice 0.514587 mean_hd95 13.892444
+29it [00:34,  1.23s/it]height 1080 width 1080
+idx 29 case image_29 mean_dice 0.646563 mean_hd95 10.198039
+30it [00:35,  1.20s/it]height 1080 width 1080
+idx 30 case image_30 mean_dice 0.612801 mean_hd95 10.440307
+31it [00:36,  1.18s/it]height 1080 width 1080
+idx 31 case image_31 mean_dice 0.311617 mean_hd95 45.000000
+32it [00:37,  1.19s/it]height 1080 width 1080
+idx 32 case image_32 mean_dice 0.581795 mean_hd95 20.880613
+33it [00:38,  1.16s/it]height 1080 width 1080
+idx 33 case image_33 mean_dice 0.641526 mean_hd95 18.788294
+34it [00:39,  1.14s/it]height 1080 width 1080
+idx 34 case image_34 mean_dice 0.604752 mean_hd95 18.027756
+35it [00:41,  1.14s/it]height 1080 width 1080
+idx 35 case image_35 mean_dice 0.582148 mean_hd95 20.396078
+36it [00:42,  1.13s/it]height 1080 width 1080
+idx 36 case image_36 mean_dice 0.551328 mean_hd95 25.000000
+37it [00:43,  1.13s/it]height 1080 width 1080
+idx 37 case image_37 mean_dice 0.465131 mean_hd95 30.594117
+38it [00:44,  1.13s/it]height 1080 width 1080
+idx 38 case image_38 mean_dice 0.417515 mean_hd95 42.379240
+39it [00:45,  1.13s/it]height 1080 width 1080
+idx 39 case image_39 mean_dice 0.410390 mean_hd95 44.418465
+40it [00:46,  1.11s/it]height 1080 width 1080
+idx 40 case image_40 mean_dice 0.446445 mean_hd95 32.000000
+41it [00:47,  1.12s/it]height 1080 width 1080
+idx 41 case image_41 mean_dice 0.375341 mean_hd95 42.000000
+42it [00:48,  1.13s/it]height 1080 width 1080
+idx 42 case image_42 mean_dice 0.624529 mean_hd95 18.000000
+43it [00:50,  1.13s/it]height 1080 width 1080
+idx 43 case image_43 mean_dice 0.654034 mean_hd95 18.027756
+44it [00:51,  1.14s/it]height 1080 width 1080
+idx 44 case image_44 mean_dice 0.665181 mean_hd95 14.866069
+45it [00:52,  1.14s/it]height 1080 width 1080
+idx 45 case image_45 mean_dice 0.647593 mean_hd95 17.464249
+46it [00:53,  1.14s/it]height 1080 width 1080
+idx 46 case image_46 mean_dice 0.443162 mean_hd95 22.000000
+47it [00:54,  1.18s/it]height 1080 width 1080
+idx 47 case image_47 mean_dice 0.546191 mean_hd95 18.000000
+48it [00:55,  1.17s/it]height 1080 width 1080
+idx 48 case image_48 mean_dice 0.609087 mean_hd95 13.000000
+49it [00:57,  1.15s/it]height 1080 width 1080
+idx 49 case image_49 mean_dice 0.548964 mean_hd95 16.278821
+50it [00:58,  1.14s/it]height 1080 width 1080
+idx 50 case image_50 mean_dice 0.459696 mean_hd95 25.495098
+51it [00:59,  1.15s/it]height 1080 width 1080
+idx 51 case image_51 mean_dice 0.489784 mean_hd95 21.000000
+52it [01:00,  1.15s/it]height 1080 width 1080
+idx 52 case image_52 mean_dice 0.537723 mean_hd95 19.646883
+53it [01:01,  1.18s/it]height 1080 width 1080
+idx 53 case image_53 mean_dice 0.537709 mean_hd95 18.681542
+54it [01:02,  1.17s/it]height 1080 width 1080
+idx 54 case image_54 mean_dice 0.535849 mean_hd95 25.000000
+55it [01:03,  1.15s/it]height 1080 width 1080
+idx 55 case image_55 mean_dice 0.557600 mean_hd95 15.033296
+56it [01:05,  1.13s/it]height 1080 width 1080
+idx 56 case image_56 mean_dice 0.476634 mean_hd95 21.023796
+57it [01:06,  1.15s/it]height 1080 width 1080
+idx 57 case image_57 mean_dice 0.556604 mean_hd95 32.015621
+58it [01:07,  1.12s/it]height 1080 width 1080
+idx 58 case image_58 mean_dice 0.582250 mean_hd95 12.206556
+59it [01:08,  1.16s/it]height 1080 width 1080
+idx 59 case image_59 mean_dice 0.532657 mean_hd95 14.035669
+60it [01:09,  1.19s/it]height 1080 width 1080
+idx 60 case image_60 mean_dice 0.546002 mean_hd95 14.000000
+61it [01:11,  1.22s/it]height 1080 width 1080
+idx 61 case image_61 mean_dice 0.530467 mean_hd95 13.341664
+62it [01:12,  1.25s/it]height 1080 width 1080
+idx 62 case image_62 mean_dice 0.604559 mean_hd95 11.000000
+63it [01:13,  1.22s/it]height 1080 width 1080
+idx 63 case image_63 mean_dice 0.627179 mean_hd95 10.000000
+64it [01:14,  1.18s/it]height 1080 width 1080
+idx 64 case image_64 mean_dice 0.658500 mean_hd95 9.899495
+65it [01:15,  1.16s/it]height 1080 width 1080
+idx 65 case image_65 mean_dice 0.679302 mean_hd95 6.403124
+66it [01:16,  1.11s/it]height 1080 width 1080
+idx 66 case image_66 mean_dice 0.655157 mean_hd95 12.206556
+67it [01:17,  1.09s/it]height 1080 width 1080
+idx 67 case image_67 mean_dice 0.554756 mean_hd95 26.870058
+68it [01:18,  1.11s/it]height 1080 width 1080
+idx 68 case image_68 mean_dice 0.619635 mean_hd95 15.000000
+69it [01:20,  1.12s/it]height 1080 width 1080
+idx 69 case image_69 mean_dice 0.559955 mean_hd95 24.515301
+70it [01:21,  1.13s/it]height 1080 width 1080
+idx 70 case image_70 mean_dice 0.458982 mean_hd95 32.802439
+71it [01:22,  1.14s/it]height 1080 width 1080
+idx 71 case image_71 mean_dice 0.363970 mean_hd95 41.976184
+72it [01:23,  1.12s/it]height 1080 width 1080
+idx 72 case image_72 mean_dice 0.451271 mean_hd95 38.600518
+73it [01:24,  1.13s/it]height 1080 width 1080
+idx 73 case image_73 mean_dice 0.436303 mean_hd95 33.090022
+74it [01:25,  1.12s/it]height 1080 width 1080
+idx 74 case image_74 mean_dice 0.462325 mean_hd95 31.827661
+75it [01:26,  1.13s/it]height 1080 width 1080
+idx 75 case image_75 mean_dice 0.408601 mean_hd95 39.000000
+76it [01:28,  1.13s/it]height 1080 width 1080
+idx 76 case image_76 mean_dice 0.634419 mean_hd95 15.000000
+77it [01:29,  1.13s/it]height 1080 width 1080
+idx 77 case image_77 mean_dice 0.679749 mean_hd95 14.000000
+78it [01:30,  1.13s/it]height 1080 width 1080
+idx 78 case image_78 mean_dice 0.606952 mean_hd95 18.027756
+79it [01:31,  1.15s/it]height 1080 width 1080
+idx 79 case image_79 mean_dice 0.627585 mean_hd95 18.027756
+80it [01:32,  1.15s/it]height 1080 width 1080
+idx 80 case image_80 mean_dice 0.527384 mean_hd95 18.248288
+81it [01:33,  1.13s/it]height 1080 width 1080
+idx 81 case image_81 mean_dice 0.461868 mean_hd95 21.633308
+82it [01:34,  1.13s/it]height 1080 width 1080
+idx 82 case image_82 mean_dice 0.536132 mean_hd95 19.235384
+83it [01:35,  1.12s/it]height 1080 width 1080
+idx 83 case image_83 mean_dice 0.557265 mean_hd95 16.000000
+84it [01:37,  1.11s/it]height 1080 width 1080
+idx 84 case image_84 mean_dice 0.483211 mean_hd95 25.000000
+85it [01:38,  1.13s/it]height 1080 width 1080
+idx 85 case image_85 mean_dice 0.533283 mean_hd95 19.000000
+86it [01:39,  1.14s/it]height 1080 width 1080
+idx 86 case image_86 mean_dice 0.444848 mean_hd95 27.459060
+87it [01:40,  1.15s/it]height 1080 width 1080
+idx 87 case image_87 mean_dice 0.531518 mean_hd95 12.806248
+88it [01:41,  1.19s/it]height 1080 width 1080
+idx 88 case image_88 mean_dice 0.546443 mean_hd95 14.142136
+89it [01:43,  1.21s/it]height 1080 width 1080
+idx 89 case image_89 mean_dice 0.525195 mean_hd95 13.000000
+90it [01:44,  1.22s/it]height 1080 width 1080
+idx 90 case image_90 mean_dice 0.548000 mean_hd95 12.649111
+91it [01:45,  1.24s/it]height 1080 width 1080
+idx 91 case image_91 mean_dice 0.570173 mean_hd95 12.165525
+92it [01:46,  1.26s/it]height 1080 width 1080
+idx 92 case image_92 mean_dice 0.587814 mean_hd95 12.041595
+93it [01:48,  1.24s/it]height 1080 width 1080
+idx 93 case image_93 mean_dice 0.616368 mean_hd95 11.401754
+94it [01:49,  1.21s/it]height 1080 width 1080
+idx 94 case image_94 mean_dice 0.575886 mean_hd95 23.259407
+95it [01:50,  1.20s/it]height 1080 width 1080
+idx 95 case image_95 mean_dice 0.624956 mean_hd95 11.661904
+96it [01:51,  1.18s/it]height 1080 width 1080
+idx 96 case image_96 mean_dice 0.583904 mean_hd95 19.313208
+97it [01:52,  1.18s/it]height 1080 width 1080
+idx 97 case image_97 mean_dice 0.567953 mean_hd95 28.000000
+98it [01:53,  1.18s/it]height 1080 width 1080
+idx 98 case image_98 mean_dice 0.607168 mean_hd95 16.552945
+99it [01:55,  1.17s/it]height 1080 width 1080
+idx 99 case image_99 mean_dice 0.590914 mean_hd95 19.924859
+100it [01:56,  1.16s/it]height 1080 width 1080
+idx 100 case image_100 mean_dice 0.580620 mean_hd95 20.000000
+101it [01:57,  1.15s/it]height 1080 width 1080
+idx 101 case image_101 mean_dice 0.627867 mean_hd95 14.000000
+102it [01:58,  1.13s/it]height 1080 width 1080
+idx 102 case image_102 mean_dice 0.606102 mean_hd95 16.124515
+103it [01:59,  1.12s/it]height 1080 width 1080
+idx 103 case image_103 mean_dice 0.546684 mean_hd95 26.000000
+104it [02:00,  1.12s/it]height 1080 width 1080
+idx 104 case image_104 mean_dice 0.612992 mean_hd95 17.000000
+105it [02:01,  1.13s/it]height 1080 width 1080
+idx 105 case image_105 mean_dice 0.444596 mean_hd95 39.012818
+106it [02:02,  1.13s/it]height 1080 width 1080
+idx 106 case image_106 mean_dice 0.438509 mean_hd95 33.837849
+107it [02:04,  1.14s/it]height 1080 width 1080
+idx 107 case image_107 mean_dice 0.409200 mean_hd95 37.802116
+108it [02:05,  1.13s/it]height 1080 width 1080
+idx 108 case image_108 mean_dice 0.450367 mean_hd95 38.013156
+109it [02:06,  1.13s/it]height 1080 width 1080
+idx 109 case image_109 mean_dice 0.410198 mean_hd95 35.805028
+110it [02:07,  1.14s/it]height 1080 width 1080
+idx 110 case image_110 mean_dice 0.650258 mean_hd95 13.152946
+111it [02:08,  1.14s/it]height 1080 width 1080
+idx 111 case image_111 mean_dice 0.617231 mean_hd95 18.027756
+112it [02:09,  1.15s/it]height 1080 width 1080
+idx 112 case image_112 mean_dice 0.654198 mean_hd95 17.204651
+113it [02:11,  1.15s/it]height 1080 width 1080
+idx 113 case image_113 mean_dice 0.543935 mean_hd95 17.000000
+114it [02:12,  1.14s/it]height 1080 width 1080
+idx 114 case image_114 mean_dice 0.458253 mean_hd95 21.095023
+115it [02:13,  1.11s/it]height 1080 width 1080
+idx 115 case image_115 mean_dice 0.594727 mean_hd95 12.529964
+116it [02:14,  1.10s/it]height 1080 width 1080
+idx 116 case image_116 mean_dice 0.511440 mean_hd95 18.000000
+117it [02:15,  1.11s/it]height 1080 width 1080
+idx 117 case image_117 mean_dice 0.567994 mean_hd95 14.000000
+118it [02:16,  1.13s/it]height 1080 width 1080
+idx 118 case image_118 mean_dice 0.446840 mean_hd95 25.179357
+119it [02:17,  1.15s/it]height 1080 width 1080
+idx 119 case image_119 mean_dice 0.472023 mean_hd95 21.000000
+120it [02:18,  1.16s/it]height 1080 width 1080
+idx 120 case image_120 mean_dice 0.449139 mean_hd95 26.925824
+121it [02:20,  1.16s/it]height 1080 width 1080
+idx 121 case image_121 mean_dice 0.537745 mean_hd95 18.027756
+122it [02:21,  1.17s/it]height 1080 width 1080
+idx 122 case image_122 mean_dice 0.551973 mean_hd95 12.649111
+123it [02:22,  1.19s/it]height 1080 width 1080
+idx 123 case image_123 mean_dice 0.561763 mean_hd95 12.041595
+124it [02:23,  1.25s/it]height 1080 width 1080
+idx 124 case image_124 mean_dice 0.557866 mean_hd95 14.142136
+125it [02:25,  1.25s/it]height 1080 width 1080
+idx 125 case image_125 mean_dice 0.538407 mean_hd95 14.000000
+126it [02:26,  1.24s/it]height 1080 width 1080
+idx 126 case image_126 mean_dice 0.545192 mean_hd95 13.152946
+127it [02:27,  1.25s/it]height 1080 width 1080
+idx 127 case image_127 mean_dice 0.611434 mean_hd95 11.704700
+128it [02:28,  1.22s/it]height 1080 width 1080
+idx 128 case image_128 mean_dice 0.628223 mean_hd95 10.000000
+129it [02:29,  1.21s/it]height 1080 width 1080
+idx 129 case image_129 mean_dice 0.618863 mean_hd95 9.899495
+130it [02:31,  1.19s/it]height 1080 width 1080
+idx 130 case image_130 mean_dice 0.626450 mean_hd95 12.727922
+131it [02:32,  1.19s/it]height 1080 width 1080
+idx 131 case image_131 mean_dice 0.615665 mean_hd95 17.000000
+132it [02:33,  1.16s/it]height 1080 width 1080
+idx 132 case image_132 mean_dice 0.582911 mean_hd95 26.870058
+133it [02:34,  1.15s/it]height 1080 width 1080
+idx 133 case image_133 mean_dice 0.449673 mean_hd95 36.235342
+134it [02:35,  1.15s/it]height 1080 width 1080
+idx 134 case image_134 mean_dice 0.429869 mean_hd95 31.000000
+135it [02:36,  1.14s/it]height 1080 width 1080
+idx 135 case image_135 mean_dice 0.442356 mean_hd95 34.205263
+136it [02:37,  1.14s/it]height 1080 width 1080
+idx 136 case image_136 mean_dice 0.464476 mean_hd95 38.275318
+137it [02:39,  1.14s/it]height 1080 width 1080
+idx 137 case image_137 mean_dice 0.421972 mean_hd95 42.201896
+138it [02:40,  1.14s/it]height 1080 width 1080
+idx 138 case image_138 mean_dice 0.648802 mean_hd95 15.000000
+139it [02:41,  1.14s/it]height 1080 width 1080
+idx 139 case image_139 mean_dice 0.659534 mean_hd95 13.892444
+140it [02:42,  1.15s/it]height 1080 width 1080
+idx 140 case image_140 mean_dice 0.636317 mean_hd95 15.000000
+141it [02:43,  1.15s/it]height 1080 width 1080
+idx 141 case image_141 mean_dice 0.663500 mean_hd95 15.620499
+142it [02:44,  1.14s/it]height 1080 width 1080
+idx 142 case image_142 mean_dice 0.652415 mean_hd95 15.264338
+143it [02:45,  1.15s/it]height 1080 width 1080
+idx 143 case image_143 mean_dice 0.505636 mean_hd95 18.027756
+144it [02:47,  1.16s/it]height 1080 width 1080
+idx 144 case image_144 mean_dice 0.506303 mean_hd95 26.419690
+145it [02:48,  1.14s/it]height 1080 width 1080
+idx 145 case image_145 mean_dice 0.582220 mean_hd95 13.038405
+146it [02:49,  1.13s/it]height 1080 width 1080
+idx 146 case image_146 mean_dice 0.587152 mean_hd95 17.000000
+147it [02:50,  1.13s/it]height 1080 width 1080
+idx 147 case image_147 mean_dice 0.540020 mean_hd95 16.278821
+148it [02:51,  1.15s/it]height 1080 width 1080
+idx 148 case image_148 mean_dice 0.437662 mean_hd95 26.000000
+149it [02:52,  1.15s/it]height 1080 width 1080
+idx 149 case image_149 mean_dice 0.530250 mean_hd95 20.396078
+150it [02:53,  1.15s/it]height 1080 width 1080
+idx 150 case image_150 mean_dice 0.408744 mean_hd95 26.870058
+151it [02:55,  1.16s/it]height 1080 width 1080
+idx 151 case image_151 mean_dice 0.519267 mean_hd95 22.671568
+152it [02:56,  1.14s/it]height 1080 width 1080
+idx 152 case image_152 mean_dice 0.476946 mean_hd95 21.633308
+153it [02:57,  1.15s/it]height 1080 width 1080
+idx 153 case image_153 mean_dice 0.443259 mean_hd95 26.907248
+154it [02:58,  1.13s/it]height 1080 width 1080
+idx 154 case image_154 mean_dice 0.447238 mean_hd95 25.000000
+155it [02:59,  1.15s/it]height 1080 width 1080
+idx 155 case image_155 mean_dice 0.464682 mean_hd95 24.738634
+156it [03:00,  1.15s/it]height 1080 width 1080
+idx 156 case image_156 mean_dice 0.481522 mean_hd95 22.090722
+157it [03:02,  1.16s/it]height 1080 width 1080
+idx 157 case image_157 mean_dice 0.508108 mean_hd95 18.000000
+158it [03:03,  1.13s/it]height 1080 width 1080
+idx 158 case image_158 mean_dice 0.560108 mean_hd95 12.727922
+159it [03:04,  1.17s/it]height 1080 width 1080
+idx 159 case image_159 mean_dice 0.570884 mean_hd95 13.000000
+160it [03:05,  1.19s/it]height 1080 width 1080
+idx 160 case image_160 mean_dice 0.555013 mean_hd95 12.649111
+161it [03:06,  1.22s/it]height 1080 width 1080
+idx 161 case image_161 mean_dice 0.547357 mean_hd95 13.453624
+162it [03:08,  1.23s/it]height 1080 width 1080
+idx 162 case image_162 mean_dice 0.545234 mean_hd95 13.000000
+163it [03:09,  1.23s/it]height 1080 width 1080
+idx 163 case image_163 mean_dice 0.574016 mean_hd95 12.000000
+164it [03:10,  1.25s/it]height 1080 width 1080
+idx 164 case image_164 mean_dice 0.545890 mean_hd95 13.416408
+165it [03:11,  1.24s/it]height 1080 width 1080
+idx 165 case image_165 mean_dice 0.552150 mean_hd95 13.000000
+166it [03:13,  1.23s/it]height 1080 width 1080
+idx 166 case image_166 mean_dice 0.626678 mean_hd95 12.000000
+167it [03:14,  1.21s/it]height 1080 width 1080
+idx 167 case image_167 mean_dice 0.628467 mean_hd95 10.000000
+168it [03:15,  1.20s/it]height 1080 width 1080
+idx 168 case image_168 mean_dice 0.562508 mean_hd95 15.652476
+169it [03:16,  1.18s/it]height 1080 width 1080
+idx 169 case image_169 mean_dice 0.636206 mean_hd95 10.770330
+170it [03:17,  1.17s/it]height 1080 width 1080
+idx 170 case image_170 mean_dice 0.590169 mean_hd95 13.453624
+171it [03:18,  1.18s/it]height 1080 width 1080
+idx 171 case image_171 mean_dice 0.606293 mean_hd95 13.453624
+172it [03:20,  1.17s/it]height 1080 width 1080
+idx 172 case image_172 mean_dice 0.518289 mean_hd95 23.194827
+173it [03:21,  1.16s/it]height 1080 width 1080
+idx 173 case image_173 mean_dice 0.595823 mean_hd95 22.022716
+174it [03:22,  1.14s/it]height 1080 width 1080
+idx 174 case image_174 mean_dice 0.559561 mean_hd95 22.561028
+175it [03:23,  1.13s/it]height 1080 width 1080
+idx 175 case image_175 mean_dice 0.552992 mean_hd95 25.612497
+176it [03:24,  1.13s/it]height 1080 width 1080
+idx 176 case image_176 mean_dice 0.614963 mean_hd95 22.090722
+177it [03:25,  1.12s/it]height 1080 width 1080
+idx 177 case image_177 mean_dice 0.632038 mean_hd95 14.560220
+178it [03:26,  1.13s/it]height 1080 width 1080
+idx 178 case image_178 mean_dice 0.617169 mean_hd95 14.317821
+179it [03:27,  1.13s/it]height 1080 width 1080
+idx 179 case image_179 mean_dice 0.482328 mean_hd95 32.695565
+180it [03:29,  1.12s/it]height 1080 width 1080
+idx 180 case image_180 mean_dice 0.431187 mean_hd95 46.400431
+181it [03:30,  1.10s/it]height 1080 width 1080
+idx 181 case image_181 mean_dice 0.354959 mean_hd95 48.010416
+182it [03:31,  1.11s/it]height 1080 width 1080
+idx 182 case image_182 mean_dice 0.647729 mean_hd95 14.560220
+183it [03:32,  1.13s/it]height 1080 width 1080
+idx 183 case image_183 mean_dice 0.644932 mean_hd95 14.317821
+184it [03:33,  1.14s/it]height 1080 width 1080
+idx 184 case image_184 mean_dice 0.642328 mean_hd95 15.231546
+185it [03:34,  1.16s/it]height 1080 width 1080
+idx 185 case image_185 mean_dice 0.679265 mean_hd95 12.000000
+186it [03:35,  1.16s/it]height 1080 width 1080
+idx 186 case image_186 mean_dice 0.660175 mean_hd95 13.038405
+187it [03:37,  1.16s/it]height 1080 width 1080
+idx 187 case image_187 mean_dice 0.636621 mean_hd95 18.000000
+188it [03:38,  1.15s/it]height 1080 width 1080
+idx 188 case image_188 mean_dice 0.639007 mean_hd95 14.317821
+189it [03:39,  1.17s/it]height 1080 width 1080
+idx 189 case image_189 mean_dice 0.548359 mean_hd95 20.000000
+190it [03:40,  1.16s/it]height 1080 width 1080
+idx 190 case image_190 mean_dice 0.526995 mean_hd95 20.000000
+191it [03:41,  1.15s/it]height 1080 width 1080
+idx 191 case image_191 mean_dice 0.527349 mean_hd95 19.313208
+192it [03:42,  1.14s/it]height 1080 width 1080
+idx 192 case image_192 mean_dice 0.515443 mean_hd95 18.357560
+193it [03:43,  1.13s/it]height 1080 width 1080
+idx 193 case image_193 mean_dice 0.572820 mean_hd95 15.000000
+194it [03:44,  1.10s/it]height 1080 width 1080
+idx 194 case image_194 mean_dice 0.390766 mean_hd95 22.000000
+195it [03:46,  1.12s/it]height 1080 width 1080
+idx 195 case image_195 mean_dice 0.516663 mean_hd95 21.633308
+196it [03:47,  1.13s/it]height 1080 width 1080
+idx 196 case image_196 mean_dice 0.444248 mean_hd95 26.925824
+197it [03:48,  1.14s/it]height 1080 width 1080
+idx 197 case image_197 mean_dice 0.451168 mean_hd95 26.172505
+198it [03:49,  1.14s/it]height 1080 width 1080
+idx 198 case image_198 mean_dice 0.432700 mean_hd95 25.612497
+199it [03:50,  1.16s/it]height 1080 width 1080
+idx 199 case image_199 mean_dice 0.534136 mean_hd95 13.038405
+200it [03:52,  1.20s/it]height 1080 width 1080
+idx 200 case image_200 mean_dice 0.538850 mean_hd95 13.928388
+201it [03:53,  1.21s/it]height 1080 width 1080
+idx 201 case image_201 mean_dice 0.528821 mean_hd95 14.000000
+202it [03:54,  1.22s/it]height 1080 width 1080
+idx 202 case image_202 mean_dice 0.606518 mean_hd95 11.401754
+203it [03:55,  1.19s/it]height 1080 width 1080
+idx 203 case image_203 mean_dice 0.578653 mean_hd95 16.278821
+204it [03:56,  1.18s/it]height 1080 width 1080
+idx 204 case image_204 mean_dice 0.574240 mean_hd95 13.453624
+205it [03:57,  1.18s/it]height 1080 width 1080
+idx 205 case image_205 mean_dice 0.615557 mean_hd95 10.295630
+206it [03:59,  1.17s/it]height 1080 width 1080
+idx 206 case image_206 mean_dice 0.581354 mean_hd95 21.213203
+207it [04:00,  1.15s/it]height 1080 width 1080
+idx 207 case image_207 mean_dice 0.615637 mean_hd95 16.000000
+208it [04:01,  1.15s/it]height 1080 width 1080
+idx 208 case image_208 mean_dice 0.574864 mean_hd95 22.472205
+209it [04:02,  1.15s/it]height 1080 width 1080
+idx 209 case image_209 mean_dice 0.575404 mean_hd95 28.000000
+210it [04:03,  1.14s/it]height 1080 width 1080
+idx 210 case image_210 mean_dice 0.437297 mean_hd95 31.000000
+211it [04:04,  1.14s/it]height 1080 width 1080
+idx 211 case image_211 mean_dice 0.482249 mean_hd95 29.427878
+212it [04:05,  1.15s/it]height 1080 width 1080
+idx 212 case image_212 mean_dice 0.675981 mean_hd95 13.601471
+213it [04:07,  1.16s/it]height 1080 width 1080
+idx 213 case image_213 mean_dice 0.645305 mean_hd95 15.231546
+214it [04:08,  1.15s/it]height 1080 width 1080
+idx 214 case image_214 mean_dice 0.658049 mean_hd95 13.038405
+215it [04:09,  1.16s/it]height 1080 width 1080
+idx 215 case image_215 mean_dice 0.614482 mean_hd95 20.223748
+216it [04:10,  1.15s/it]height 1080 width 1080
+idx 216 case image_216 mean_dice 0.658237 mean_hd95 14.764823
+217it [04:11,  1.18s/it]height 1080 width 1080
+idx 217 case image_217 mean_dice 0.503156 mean_hd95 19.235384
+218it [04:12,  1.16s/it]height 1080 width 1080
+idx 218 case image_218 mean_dice 0.552712 mean_hd95 17.720045
+219it [04:14,  1.16s/it]height 1080 width 1080
+idx 219 case image_219 mean_dice 0.510208 mean_hd95 17.888544
+220it [04:15,  1.14s/it]height 1080 width 1080
+idx 220 case image_220 mean_dice 0.448804 mean_hd95 23.323808
+221it [04:16,  1.16s/it]height 1080 width 1080
+idx 221 case image_221 mean_dice 0.501067 mean_hd95 23.600847
+222it [04:17,  1.16s/it]height 1080 width 1080
+idx 222 case image_222 mean_dice 0.405043 mean_hd95 27.802878
+223it [04:18,  1.16s/it]height 1080 width 1080
+idx 223 case image_223 mean_dice 0.411233 mean_hd95 29.732137
+224it [04:19,  1.15s/it]height 1080 width 1080
+idx 224 case image_224 mean_dice 0.475769 mean_hd95 21.540659
+225it [04:20,  1.15s/it]height 1080 width 1080
+idx 225 case image_225 mean_dice 0.444205 mean_hd95 25.806976
+226it [04:22,  1.16s/it]height 1080 width 1080
+idx 226 case image_226 mean_dice 0.560429 mean_hd95 13.453624
+227it [04:23,  1.20s/it]height 1080 width 1080
+idx 227 case image_227 mean_dice 0.552407 mean_hd95 13.000000
+228it [04:24,  1.22s/it]height 1080 width 1080
+idx 228 case image_228 mean_dice 0.527440 mean_hd95 14.000000
+229it [04:25,  1.22s/it]height 1080 width 1080
+idx 229 case image_229 mean_dice 0.627755 mean_hd95 11.313708
+230it [04:27,  1.19s/it]height 1080 width 1080
+idx 230 case image_230 mean_dice 0.586738 mean_hd95 44.283180
+231it [04:28,  1.18s/it]height 1080 width 1080
+idx 231 case image_231 mean_dice 0.646813 mean_hd95 8.485281
+232it [04:29,  1.17s/it]height 1080 width 1080
+idx 232 case image_232 mean_dice 0.616243 mean_hd95 11.401754
+233it [04:30,  1.17s/it]height 1080 width 1080
+idx 233 case image_233 mean_dice 0.645113 mean_hd95 15.000000
+234it [04:31,  1.16s/it]height 1080 width 1080
+idx 234 case image_234 mean_dice 0.637184 mean_hd95 14.866069
+235it [04:32,  1.15s/it]height 1080 width 1080
+idx 235 case image_235 mean_dice 0.605306 mean_hd95 19.000000
+236it [04:33,  1.14s/it]height 1080 width 1080
+idx 236 case image_236 mean_dice 0.558599 mean_hd95 30.463092
+237it [04:35,  1.14s/it]height 1080 width 1080
+idx 237 case image_237 mean_dice 0.594824 mean_hd95 23.323808
+238it [04:36,  1.12s/it]height 1080 width 1080
+idx 238 case image_238 mean_dice 0.490086 mean_hd95 37.000000
+239it [04:37,  1.11s/it]height 1080 width 1080
+idx 239 case image_239 mean_dice 0.441489 mean_hd95 32.249031
+240it [04:38,  1.12s/it]height 1080 width 1080
+idx 240 case image_240 mean_dice 0.493872 mean_hd95 30.000000
+241it [04:39,  1.13s/it]height 1080 width 1080
+idx 241 case image_241 mean_dice 0.683178 mean_hd95 11.180340
+242it [04:40,  1.14s/it]height 1080 width 1080
+idx 242 case image_242 mean_dice 0.613071 mean_hd95 26.000000
+243it [04:41,  1.14s/it]height 1080 width 1080
+idx 243 case image_243 mean_dice 0.664905 mean_hd95 12.369317
+244it [04:42,  1.14s/it]height 1080 width 1080
+idx 244 case image_244 mean_dice 0.644974 mean_hd95 14.866069
+245it [04:44,  1.15s/it]height 1080 width 1080
+idx 245 case image_245 mean_dice 0.474727 mean_hd95 23.345235
+246it [04:45,  1.15s/it]height 1080 width 1080
+idx 246 case image_246 mean_dice 0.563490 mean_hd95 16.492423
+247it [04:46,  1.13s/it]height 1080 width 1080
+idx 247 case image_247 mean_dice 0.457797 mean_hd95 20.396078
+248it [04:47,  1.10s/it]height 1080 width 1080
+idx 248 case image_248 mean_dice 0.572797 mean_hd95 17.000000
+249it [04:48,  1.10s/it]height 1080 width 1080
+idx 249 case image_249 mean_dice 0.471620 mean_hd95 24.738634
+250it [04:49,  1.13s/it]height 1080 width 1080
+idx 250 case image_250 mean_dice 0.452582 mean_hd95 22.825424
+251it [04:50,  1.14s/it]height 1080 width 1080
+idx 251 case image_251 mean_dice 0.456190 mean_hd95 26.172505
+252it [04:52,  1.15s/it]height 1080 width 1080
+idx 252 case image_252 mean_dice 0.525922 mean_hd95 15.000000
+253it [04:53,  1.18s/it]height 1080 width 1080
+idx 253 case image_253 mean_dice 0.530888 mean_hd95 13.892444
+254it [04:54,  1.19s/it]height 1080 width 1080
+idx 254 case image_254 mean_dice 0.571808 mean_hd95 11.704700
+255it [04:55,  1.22s/it]height 1080 width 1080
+idx 255 case image_255 mean_dice 0.620624 mean_hd95 10.000000
+256it [04:56,  1.20s/it]height 1080 width 1080
+idx 256 case image_256 mean_dice 0.657053 mean_hd95 8.944272
+257it [04:58,  1.17s/it]height 1080 width 1080
+idx 257 case image_257 mean_dice 0.622266 mean_hd95 16.000000
+258it [04:59,  1.15s/it]height 1080 width 1080
+idx 258 case image_258 mean_dice 0.656997 mean_hd95 9.000000
+259it [05:00,  1.14s/it]height 1080 width 1080
+idx 259 case image_259 mean_dice 0.557132 mean_hd95 28.607688
+260it [05:01,  1.14s/it]height 1080 width 1080
+idx 260 case image_260 mean_dice 0.599690 mean_hd95 18.601075
+261it [05:02,  1.13s/it]height 1080 width 1080
+idx 261 case image_261 mean_dice 0.570691 mean_hd95 20.808652
+262it [05:03,  1.14s/it]height 1080 width 1080
+idx 262 case image_262 mean_dice 0.496079 mean_hd95 27.658633
+263it [05:04,  1.14s/it]height 1080 width 1080
+idx 263 case image_263 mean_dice 0.472643 mean_hd95 33.000000
+264it [05:05,  1.13s/it]height 1080 width 1080
+idx 264 case image_264 mean_dice 0.696128 mean_hd95 11.401754
+265it [05:07,  1.14s/it]height 1080 width 1080
+idx 265 case image_265 mean_dice 0.625224 mean_hd95 18.027756
+266it [05:08,  1.14s/it]height 1080 width 1080
+idx 266 case image_266 mean_dice 0.621656 mean_hd95 16.643317
+267it [05:09,  1.15s/it]height 1080 width 1080
+idx 267 case image_267 mean_dice 0.473560 mean_hd95 21.023796
+268it [05:10,  1.15s/it]height 1080 width 1080
+idx 268 case image_268 mean_dice 0.481210 mean_hd95 19.235384
+269it [05:11,  1.18s/it]height 1080 width 1080
+idx 269 case image_269 mean_dice 0.547305 mean_hd95 14.000000
+270it [05:12,  1.16s/it]height 1080 width 1080
+idx 270 case image_270 mean_dice 0.453780 mean_hd95 25.000000
+271it [05:14,  1.15s/it]height 1080 width 1080
+idx 271 case image_271 mean_dice 0.595458 mean_hd95 13.416408
+272it [05:15,  1.13s/it]height 1080 width 1080
+idx 272 case image_272 mean_dice 0.544898 mean_hd95 18.867962
+273it [05:16,  1.15s/it]height 1080 width 1080
+idx 273 case image_273 mean_dice 0.446902 mean_hd95 24.186773
+274it [05:18,  1.36s/it]height 1080 width 1080
+idx 274 case image_274 mean_dice 0.389434 mean_hd95 32.202484
+275it [05:19,  1.28s/it]height 1080 width 1080
+idx 275 case image_275 mean_dice 0.446103 mean_hd95 24.413111
+276it [05:20,  1.25s/it]height 1080 width 1080
+idx 276 case image_276 mean_dice 0.476433 mean_hd95 23.000000
+277it [05:21,  1.25s/it]height 1080 width 1080
+idx 277 case image_277 mean_dice 0.519363 mean_hd95 18.000000
+278it [05:22,  1.21s/it]height 1080 width 1080
+idx 278 case image_278 mean_dice 0.452806 mean_hd95 25.495098
+279it [05:24,  1.20s/it]height 1080 width 1080
+idx 279 case image_279 mean_dice 0.521075 mean_hd95 14.422205
+280it [05:25,  1.23s/it]height 1080 width 1080
+idx 280 case image_280 mean_dice 0.549744 mean_hd95 14.317821
+281it [05:26,  1.22s/it]height 1080 width 1080
+idx 281 case image_281 mean_dice 0.566388 mean_hd95 18.439089
+282it [05:27,  1.20s/it]height 1080 width 1080
+idx 282 case image_282 mean_dice 0.629658 mean_hd95 11.000000
+283it [05:28,  1.19s/it]height 1080 width 1080
+idx 283 case image_283 mean_dice 0.571101 mean_hd95 24.020824
+284it [05:29,  1.17s/it]height 1080 width 1080
+idx 284 case image_284 mean_dice 0.619905 mean_hd95 11.045361
+285it [05:31,  1.18s/it]height 1080 width 1080
+idx 285 case image_285 mean_dice 0.642868 mean_hd95 10.000000
+286it [05:32,  1.17s/it]height 1080 width 1080
+idx 286 case image_286 mean_dice 0.581123 mean_hd95 25.495098
+287it [05:33,  1.15s/it]height 1080 width 1080
+idx 287 case image_287 mean_dice 0.579413 mean_hd95 19.697716
+288it [05:34,  1.14s/it]height 1080 width 1080
+idx 288 case image_288 mean_dice 0.543901 mean_hd95 24.698178
+289it [05:35,  1.13s/it]height 1080 width 1080
+idx 289 case image_289 mean_dice 0.584025 mean_hd95 16.492423
+290it [05:36,  1.14s/it]height 1080 width 1080
+idx 290 case image_290 mean_dice 0.444843 mean_hd95 33.615473
+291it [05:38,  1.16s/it]height 1080 width 1080
+idx 291 case image_291 mean_dice 0.485354 mean_hd95 27.513633
+292it [05:39,  1.17s/it]height 1080 width 1080
+idx 292 case image_292 mean_dice 0.471282 mean_hd95 27.000000
+293it [05:40,  1.18s/it]height 1080 width 1080
+idx 293 case image_293 mean_dice 0.625117 mean_hd95 17.000000
+294it [05:41,  1.22s/it]height 1080 width 1080
+idx 294 case image_294 mean_dice 0.642231 mean_hd95 17.029386
+295it [05:42,  1.22s/it]height 1080 width 1080
+idx 295 case image_295 mean_dice 0.670983 mean_hd95 14.317821
+296it [05:44,  1.21s/it]height 1080 width 1080
+idx 296 case image_296 mean_dice 0.618745 mean_hd95 20.591260
+297it [05:45,  1.20s/it]height 1080 width 1080
+idx 297 case image_297 mean_dice 0.450577 mean_hd95 21.260292
+298it [05:46,  1.18s/it]height 1080 width 1080
+idx 298 case image_298 mean_dice 0.523965 mean_hd95 19.313208
+299it [05:47,  1.16s/it]height 1080 width 1080
+idx 299 case image_299 mean_dice 0.520127 mean_hd95 15.811388
+300it [05:48,  1.15s/it]height 1080 width 1080
+idx 300 case image_300 mean_dice 0.544042 mean_hd95 14.142136
+301it [05:49,  1.15s/it]height 1080 width 1080
+idx 301 case image_301 mean_dice 0.428962 mean_hd95 27.784888
+302it [05:51,  1.17s/it]height 1080 width 1080
+idx 302 case image_302 mean_dice 0.463412 mean_hd95 24.596748
+303it [05:52,  1.18s/it]height 1080 width 1080
+idx 303 case image_303 mean_dice 0.438171 mean_hd95 25.632011
+304it [05:53,  1.22s/it]height 1080 width 1080
+idx 304 case image_304 mean_dice 0.460422 mean_hd95 26.248809
+305it [05:54,  1.21s/it]height 1080 width 1080
+idx 305 case image_305 mean_dice 0.571325 mean_hd95 16.000000
+306it [05:55,  1.16s/it]height 1080 width 1080
+idx 306 case image_306 mean_dice 0.583523 mean_hd95 12.041595
+307it [05:57,  1.20s/it]height 1080 width 1080
+idx 307 case image_307 mean_dice 0.522535 mean_hd95 13.152946
+308it [05:58,  1.25s/it]height 1080 width 1080
+idx 308 case image_308 mean_dice 0.513419 mean_hd95 14.142136
+309it [05:59,  1.25s/it]height 1080 width 1080
+idx 309 case image_309 mean_dice 0.603692 mean_hd95 12.041595
+310it [06:00,  1.20s/it]height 1080 width 1080
+idx 310 case image_310 mean_dice 0.666628 mean_hd95 8.944272
+311it [06:01,  1.19s/it]height 1080 width 1080
+idx 311 case image_311 mean_dice 0.600556 mean_hd95 13.453624
+312it [06:03,  1.19s/it]height 1080 width 1080
+idx 312 case image_312 mean_dice 0.630406 mean_hd95 10.000000
+313it [06:04,  1.18s/it]height 1080 width 1080
+idx 313 case image_313 mean_dice 0.561336 mean_hd95 31.048349
+314it [06:05,  1.17s/it]height 1080 width 1080
+idx 314 case image_314 mean_dice 0.565182 mean_hd95 21.213203
+315it [06:06,  1.17s/it]height 1080 width 1080
+idx 315 case image_315 mean_dice 0.597506 mean_hd95 17.464249
+316it [06:07,  1.17s/it]height 1080 width 1080
+idx 316 case image_316 mean_dice 0.557645 mean_hd95 20.124612
+317it [06:08,  1.17s/it]height 1080 width 1080
+idx 317 case image_317 mean_dice 0.539978 mean_hd95 26.000000
+318it [06:10,  1.16s/it]height 1080 width 1080
+idx 318 case image_318 mean_dice 0.507117 mean_hd95 25.000000
+319it [06:11,  1.17s/it]height 1080 width 1080
+idx 319 case image_319 mean_dice 0.456505 mean_hd95 30.000000
+320it [06:12,  1.17s/it]height 1080 width 1080
+idx 320 case image_320 mean_dice 0.646356 mean_hd95 15.811388
+321it [06:13,  1.19s/it]height 1080 width 1080
+idx 321 case image_321 mean_dice 0.645477 mean_hd95 15.132746
+322it [06:14,  1.18s/it]height 1080 width 1080
+idx 322 case image_322 mean_dice 0.637434 mean_hd95 15.297059
+323it [06:16,  1.18s/it]height 1080 width 1080
+idx 323 case image_323 mean_dice 0.654131 mean_hd95 14.212670
+324it [06:17,  1.18s/it]height 1080 width 1080
+idx 324 case image_324 mean_dice 0.657074 mean_hd95 13.038405
+325it [06:18,  1.17s/it]height 1080 width 1080
+idx 325 case image_325 mean_dice 0.676268 mean_hd95 11.401754
+326it [06:19,  1.18s/it]height 1080 width 1080
+idx 326 case image_326 mean_dice 0.660319 mean_hd95 14.866069
+327it [06:20,  1.18s/it]height 1080 width 1080
+idx 327 case image_327 mean_dice 0.650744 mean_hd95 16.031220
+328it [06:21,  1.17s/it]height 1080 width 1080
+idx 328 case image_328 mean_dice 0.457915 mean_hd95 20.248457
+329it [06:23,  1.18s/it]height 1080 width 1080
+idx 329 case image_329 mean_dice 0.444953 mean_hd95 22.360680
+330it [06:24,  1.17s/it]height 1080 width 1080
+idx 330 case image_330 mean_dice 0.472319 mean_hd95 22.000000
+331it [06:25,  1.16s/it]height 1080 width 1080
+idx 331 case image_331 mean_dice 0.508004 mean_hd95 20.591260
+332it [06:26,  1.15s/it]height 1080 width 1080
+idx 332 case image_332 mean_dice 0.504987 mean_hd95 18.000000
+333it [06:27,  1.15s/it]height 1080 width 1080
+idx 333 case image_333 mean_dice 0.476142 mean_hd95 21.633308
+334it [06:28,  1.17s/it]height 1080 width 1080
+idx 334 case image_334 mean_dice 0.506926 mean_hd95 19.104973
+335it [06:30,  1.17s/it]height 1080 width 1080
+idx 335 case image_335 mean_dice 0.419261 mean_hd95 26.870058
+336it [06:31,  1.17s/it]height 1080 width 1080
+idx 336 case image_336 mean_dice 0.495362 mean_hd95 25.612497
+337it [06:32,  1.16s/it]height 1080 width 1080
+idx 337 case image_337 mean_dice 0.524543 mean_hd95 14.000000
+338it [06:33,  1.19s/it]height 1080 width 1080
+idx 338 case image_338 mean_dice 0.553111 mean_hd95 12.806248
+339it [06:34,  1.21s/it]height 1080 width 1080
+idx 339 case image_339 mean_dice 0.527978 mean_hd95 13.453624
+340it [06:36,  1.22s/it]height 1080 width 1080
+idx 340 case image_340 mean_dice 0.546326 mean_hd95 13.000000
+341it [06:37,  1.24s/it]height 1080 width 1080
+idx 341 case image_341 mean_dice 0.521567 mean_hd95 14.317821
+342it [06:38,  1.24s/it]height 1080 width 1080
+idx 342 case image_342 mean_dice 0.492866 mean_hd95 20.615528
+343it [06:39,  1.21s/it]height 1080 width 1080
+idx 343 case image_343 mean_dice 0.582052 mean_hd95 15.000000
+344it [06:40,  1.19s/it]height 1080 width 1080
+idx 344 case image_344 mean_dice 0.603421 mean_hd95 12.083046
+345it [06:42,  1.19s/it]height 1080 width 1080
+idx 345 case image_345 mean_dice 0.593146 mean_hd95 12.041595
+346it [06:43,  1.20s/it]height 1080 width 1080
+idx 346 case image_346 mean_dice 0.564072 mean_hd95 14.866069
+347it [06:44,  1.20s/it]height 1080 width 1080
+idx 347 case image_347 mean_dice 0.506902 mean_hd95 29.732137
+348it [06:45,  1.17s/it]height 1080 width 1080
+idx 348 case image_348 mean_dice 0.534678 mean_hd95 24.698178
+349it [06:46,  1.14s/it]height 1080 width 1080
+idx 349 case image_349 mean_dice 0.556795 mean_hd95 24.207437
+350it [06:47,  1.13s/it]height 1080 width 1080
+idx 350 case image_350 mean_dice 0.548394 mean_hd95 29.068884
+351it [06:49,  1.16s/it]height 1080 width 1080
+idx 351 case image_351 mean_dice 0.573480 mean_hd95 23.000000
+352it [06:50,  1.14s/it]height 1080 width 1080
+idx 352 case image_352 mean_dice 0.576379 mean_hd95 21.023796
+353it [06:51,  1.15s/it]height 1080 width 1080
+idx 353 case image_353 mean_dice 0.509764 mean_hd95 31.000000
+354it [06:52,  1.13s/it]height 1080 width 1080
+idx 354 case image_354 mean_dice 0.473988 mean_hd95 30.675723
+355it [06:53,  1.13s/it]height 1080 width 1080
+idx 355 case image_355 mean_dice 0.373834 mean_hd95 37.000000
+356it [06:54,  1.13s/it]height 1080 width 1080
+idx 356 case image_356 mean_dice 0.402492 mean_hd95 35.355339
+357it [06:55,  1.14s/it]height 1080 width 1080
+idx 357 case image_357 mean_dice 0.503366 mean_hd95 35.000000
+358it [06:56,  1.13s/it]height 1080 width 1080
+idx 358 case image_358 mean_dice 0.646914 mean_hd95 14.866069
+359it [06:58,  1.15s/it]height 1080 width 1080
+idx 359 case image_359 mean_dice 0.682569 mean_hd95 12.727922
+360it [06:59,  1.16s/it]height 1080 width 1080
+idx 360 case image_360 mean_dice 0.652218 mean_hd95 13.038405
+361it [07:00,  1.16s/it]height 1080 width 1080
+idx 361 case image_361 mean_dice 0.670403 mean_hd95 13.341664
+362it [07:01,  1.17s/it]height 1080 width 1080
+idx 362 case image_362 mean_dice 0.658447 mean_hd95 14.142136
+363it [07:02,  1.16s/it]height 1080 width 1080
+idx 363 case image_363 mean_dice 0.692061 mean_hd95 9.219544
+364it [07:03,  1.15s/it]height 1080 width 1080
+idx 364 case image_364 mean_dice 0.640604 mean_hd95 15.811388
+365it [07:05,  1.15s/it]height 1080 width 1080
+idx 365 case image_365 mean_dice 0.665910 mean_hd95 13.000000
+366it [07:06,  1.15s/it]height 1080 width 1080
+idx 366 case image_366 mean_dice 0.641366 mean_hd95 17.262677
+367it [07:07,  1.17s/it]height 1080 width 1080
+idx 367 case image_367 mean_dice 0.506191 mean_hd95 18.027756
+368it [07:08,  1.16s/it]height 1080 width 1080
+idx 368 case image_368 mean_dice 0.476022 mean_hd95 20.880613
+369it [07:09,  1.15s/it]height 1080 width 1080
+idx 369 case image_369 mean_dice 0.548793 mean_hd95 15.297059
+370it [07:10,  1.13s/it]height 1080 width 1080
+idx 370 case image_370 mean_dice 0.499185 mean_hd95 20.808652
+371it [07:11,  1.14s/it]height 1080 width 1080
+idx 371 case image_371 mean_dice 0.573856 mean_hd95 13.000000
+372it [07:13,  1.14s/it]height 1080 width 1080
+idx 372 case image_372 mean_dice 0.528583 mean_hd95 18.248288
+373it [07:14,  1.13s/it]height 1080 width 1080
+idx 373 case image_373 mean_dice 0.432424 mean_hd95 26.419690
+374it [07:15,  1.14s/it]height 1080 width 1080
+idx 374 case image_374 mean_dice 0.487569 mean_hd95 22.671568
+375it [07:16,  1.12s/it]height 1080 width 1080
+idx 375 case image_375 mean_dice 0.548103 mean_hd95 12.083046
+376it [07:17,  1.18s/it]height 1080 width 1080
+idx 376 case image_376 mean_dice 0.522070 mean_hd95 14.142136
+377it [07:19,  1.21s/it]height 1080 width 1080
+idx 377 case image_377 mean_dice 0.555843 mean_hd95 12.806248
+378it [07:20,  1.23s/it]height 1080 width 1080
+idx 378 case image_378 mean_dice 0.593442 mean_hd95 11.661904
+379it [07:21,  1.21s/it]height 1080 width 1080
+idx 379 case image_379 mean_dice 0.575019 mean_hd95 19.697716
+380it [07:22,  1.20s/it]height 1080 width 1080
+idx 380 case image_380 mean_dice 0.608969 mean_hd95 14.000000
+381it [07:23,  1.15s/it]height 1080 width 1080
+idx 381 case image_381 mean_dice 0.625637 mean_hd95 13.038405
+382it [07:24,  1.13s/it]height 1080 width 1080
+idx 382 case image_382 mean_dice 0.612918 mean_hd95 11.000000
+383it [07:25,  1.15s/it]height 1080 width 1080
+idx 383 case image_383 mean_dice 0.554657 mean_hd95 26.925824
+384it [07:27,  1.14s/it]height 1080 width 1080
+idx 384 case image_384 mean_dice 0.605298 mean_hd95 17.029386
+385it [07:28,  1.14s/it]height 1080 width 1080
+idx 385 case image_385 mean_dice 0.480970 mean_hd95 30.000000
+386it [07:29,  1.17s/it]height 1080 width 1080
+idx 386 case image_386 mean_dice 0.482792 mean_hd95 32.893768
+387it [07:30,  1.17s/it]height 1080 width 1080
+idx 387 case image_387 mean_dice 0.425386 mean_hd95 34.985711
+388it [07:31,  1.15s/it]height 1080 width 1080
+idx 388 case image_388 mean_dice 0.460026 mean_hd95 33.136083
+389it [07:32,  1.14s/it]height 1080 width 1080
+idx 389 case image_389 mean_dice 0.691654 mean_hd95 10.295630
+390it [07:34,  1.15s/it]height 1080 width 1080
+idx 390 case image_390 mean_dice 0.651467 mean_hd95 15.000000
+391it [07:35,  1.15s/it]height 1080 width 1080
+idx 391 case image_391 mean_dice 0.684063 mean_hd95 11.180340
+392it [07:36,  1.17s/it]height 1080 width 1080
+idx 392 case image_392 mean_dice 0.642269 mean_hd95 14.142136
+393it [07:37,  1.15s/it]height 1080 width 1080
+idx 393 case image_393 mean_dice 0.690074 mean_hd95 10.000000
+394it [07:38,  1.16s/it]height 1080 width 1080
+idx 394 case image_394 mean_dice 0.631692 mean_hd95 18.384776
+395it [07:39,  1.14s/it]height 1080 width 1080
+idx 395 case image_395 mean_dice 0.540301 mean_hd95 15.811388
+396it [07:40,  1.12s/it]height 1080 width 1080
+idx 396 case image_396 mean_dice 0.596837 mean_hd95 13.928388
+397it [07:41,  1.11s/it]height 1080 width 1080
+idx 397 case image_397 mean_dice 0.592469 mean_hd95 15.000000
+398it [07:43,  1.11s/it]height 1080 width 1080
+idx 398 case image_398 mean_dice 0.545487 mean_hd95 22.022716
+399it [07:44,  1.12s/it]height 1080 width 1080
+idx 399 case image_399 mean_dice 0.555739 mean_hd95 13.038405
+400it [07:45,  1.10s/it]height 1080 width 1080
+idx 400 case image_400 mean_dice 0.592653 mean_hd95 16.000000
+401it [07:46,  1.10s/it]height 1080 width 1080
+idx 401 case image_401 mean_dice 0.451199 mean_hd95 63.031738
+402it [07:47,  1.12s/it]height 1080 width 1080
+idx 402 case image_402 mean_dice 0.546570 mean_hd95 12.806248
+403it [07:48,  1.18s/it]height 1080 width 1080
+idx 403 case image_403 mean_dice 0.512019 mean_hd95 14.212670
+404it [07:50,  1.19s/it]height 1080 width 1080
+idx 404 case image_404 mean_dice 0.614772 mean_hd95 11.661904
+405it [07:51,  1.18s/it]height 1080 width 1080
+idx 405 case image_405 mean_dice 0.603978 mean_hd95 12.806248
+406it [07:52,  1.17s/it]height 1080 width 1080
+idx 406 case image_406 mean_dice 0.606498 mean_hd95 15.652476
+407it [07:53,  1.16s/it]height 1080 width 1080
+idx 407 case image_407 mean_dice 0.537027 mean_hd95 14.866069
+408it [07:54,  1.16s/it]height 1080 width 1080
+idx 408 case image_408 mean_dice 0.572462 mean_hd95 14.000000
+409it [07:55,  1.15s/it]height 1080 width 1080
+idx 409 case image_409 mean_dice 0.653917 mean_hd95 8.544004
+410it [07:56,  1.15s/it]height 1080 width 1080
+idx 410 case image_410 mean_dice 0.575792 mean_hd95 19.104973
+411it [07:57,  1.12s/it]height 1080 width 1080
+idx 411 case image_411 mean_dice 0.573986 mean_hd95 18.110770
+412it [07:59,  1.14s/it]height 1080 width 1080
+idx 412 case image_412 mean_dice 0.556646 mean_hd95 33.286634
+413it [08:00,  1.12s/it]height 1080 width 1080
+idx 413 case image_413 mean_dice 0.569773 mean_hd95 26.570661
+414it [08:01,  1.13s/it]height 1080 width 1080
+idx 414 case image_414 mean_dice 0.580208 mean_hd95 17.117243
+415it [08:02,  1.13s/it]height 1080 width 1080
+idx 415 case image_415 mean_dice 0.585797 mean_hd95 19.646883
+416it [08:03,  1.13s/it]height 1080 width 1080
+idx 416 case image_416 mean_dice 0.438353 mean_hd95 31.764760
+417it [08:04,  1.14s/it]height 1080 width 1080
+idx 417 case image_417 mean_dice 0.434711 mean_hd95 36.769553
+418it [08:05,  1.15s/it]height 1080 width 1080
+idx 418 case image_418 mean_dice 0.473821 mean_hd95 26.019224
+419it [08:07,  1.16s/it]height 1080 width 1080
+idx 419 case image_419 mean_dice 0.433395 mean_hd95 43.185646
+420it [08:08,  1.15s/it]height 1080 width 1080
+idx 420 case image_420 mean_dice 0.660563 mean_hd95 13.892444
+421it [08:09,  1.18s/it]height 1080 width 1080
+idx 421 case image_421 mean_dice 0.662472 mean_hd95 12.649111
+422it [08:10,  1.18s/it]height 1080 width 1080
+idx 422 case image_422 mean_dice 0.637872 mean_hd95 17.204651
+423it [08:11,  1.16s/it]height 1080 width 1080
+idx 423 case image_423 mean_dice 0.679513 mean_hd95 11.180340
+424it [08:12,  1.15s/it]height 1080 width 1080
+idx 424 case image_424 mean_dice 0.482499 mean_hd95 19.924859
+425it [08:14,  1.15s/it]height 1080 width 1080
+idx 425 case image_425 mean_dice 0.430075 mean_hd95 27.459060
+426it [08:15,  1.16s/it]height 1080 width 1080
+idx 426 case image_426 mean_dice 0.446375 mean_hd95 22.090722
+427it [08:16,  1.17s/it]height 1080 width 1080
+idx 427 case image_427 mean_dice 0.544299 mean_hd95 17.720045
+428it [08:17,  1.15s/it]height 1080 width 1080
+idx 428 case image_428 mean_dice 0.610392 mean_hd95 14.866069
+429it [08:18,  1.17s/it]height 1080 width 1080
+idx 429 case image_429 mean_dice 0.551592 mean_hd95 16.278821
+430it [08:19,  1.15s/it]height 1080 width 1080
+idx 430 case image_430 mean_dice 0.547940 mean_hd95 20.880613
+431it [08:21,  1.14s/it]height 1080 width 1080
+idx 431 case image_431 mean_dice 0.530844 mean_hd95 18.788294
+432it [08:22,  1.14s/it]height 1080 width 1080
+idx 432 case image_432 mean_dice 0.573898 mean_hd95 12.806248
+433it [08:23,  1.12s/it]height 1080 width 1080
+idx 433 case image_433 mean_dice 0.575474 mean_hd95 16.552945
+434it [08:24,  1.11s/it]height 1080 width 1080
+idx 434 case image_434 mean_dice 0.569445 mean_hd95 11.313708
+435it [08:25,  1.16s/it]height 1080 width 1080
+idx 435 case image_435 mean_dice 0.552606 mean_hd95 11.704700
+436it [08:26,  1.18s/it]height 1080 width 1080
+idx 436 case image_436 mean_dice 0.634376 mean_hd95 10.295630
+437it [08:27,  1.17s/it]height 1080 width 1080
+idx 437 case image_437 mean_dice 0.622563 mean_hd95 9.486833
+438it [08:29,  1.16s/it]height 1080 width 1080
+idx 438 case image_438 mean_dice 0.594606 mean_hd95 12.806248
+439it [08:30,  1.17s/it]height 1080 width 1080
+idx 439 case image_439 mean_dice 0.623512 mean_hd95 10.440307
+440it [08:31,  1.16s/it]height 1080 width 1080
+idx 440 case image_440 mean_dice 0.651644 mean_hd95 9.486833
+441it [08:32,  1.16s/it]height 1080 width 1080
+idx 441 case image_441 mean_dice 0.544577 mean_hd95 23.086793
+442it [08:33,  1.14s/it]height 1080 width 1080
+idx 442 case image_442 mean_dice 0.582472 mean_hd95 19.646883
+443it [08:34,  1.15s/it]height 1080 width 1080
+idx 443 case image_443 mean_dice 0.594009 mean_hd95 16.552945
+444it [08:36,  1.15s/it]height 1080 width 1080
+idx 444 case image_444 mean_dice 0.463057 mean_hd95 26.627054
+445it [08:37,  1.16s/it]height 1080 width 1080
+idx 445 case image_445 mean_dice 0.470954 mean_hd95 30.066593
+446it [08:38,  1.15s/it]height 1080 width 1080
+idx 446 case image_446 mean_dice 0.509940 mean_hd95 26.076810
+447it [08:39,  1.16s/it]height 1080 width 1080
+idx 447 case image_447 mean_dice 0.678247 mean_hd95 12.041595
+448it [08:40,  1.16s/it]height 1080 width 1080
+idx 448 case image_448 mean_dice 0.645548 mean_hd95 14.866069
+449it [08:41,  1.16s/it]height 1080 width 1080
+idx 449 case image_449 mean_dice 0.608459 mean_hd95 19.697716
+450it [08:42,  1.16s/it]height 1080 width 1080
+idx 450 case image_450 mean_dice 0.681808 mean_hd95 12.041595
+451it [08:44,  1.15s/it]height 1080 width 1080
+idx 451 case image_451 mean_dice 0.658999 mean_hd95 13.000000
+452it [08:45,  1.15s/it]height 1080 width 1080
+idx 452 case image_452 mean_dice 0.660890 mean_hd95 13.000000
+453it [08:46,  1.16s/it]height 1080 width 1080
+idx 453 case image_453 mean_dice 0.536297 mean_hd95 16.552945
+454it [08:47,  1.15s/it]height 1080 width 1080
+idx 454 case image_454 mean_dice 0.510599 mean_hd95 19.104973
+455it [08:48,  1.16s/it]height 1080 width 1080
+idx 455 case image_455 mean_dice 0.511669 mean_hd95 17.691806
+456it [08:49,  1.15s/it]height 1080 width 1080
+idx 456 case image_456 mean_dice 0.556526 mean_hd95 15.811388
+457it [08:51,  1.15s/it]height 1080 width 1080
+idx 457 case image_457 mean_dice 0.569913 mean_hd95 12.806248
+458it [08:52,  1.14s/it]height 1080 width 1080
+idx 458 case image_458 mean_dice 0.524960 mean_hd95 17.262677
+459it [08:53,  1.14s/it]height 1080 width 1080
+idx 459 case image_459 mean_dice 0.594200 mean_hd95 15.000000
+460it [08:54,  1.13s/it]height 1080 width 1080
+idx 460 case image_460 mean_dice 0.562366 mean_hd95 15.000000
+461it [08:55,  1.13s/it]height 1080 width 1080
+idx 461 case image_461 mean_dice 0.490314 mean_hd95 29.068884
+462it [08:56,  1.13s/it]height 1080 width 1080
+idx 462 case image_462 mean_dice 0.471645 mean_hd95 25.495098
+463it [08:58,  1.28s/it]height 1080 width 1080
+idx 463 case image_463 mean_dice 0.478615 mean_hd95 27.586228
+464it [08:59,  1.23s/it]height 1080 width 1080
+idx 464 case image_464 mean_dice 0.506677 mean_hd95 21.095023
+465it [09:00,  1.21s/it]height 1080 width 1080
+idx 465 case image_465 mean_dice 0.548466 mean_hd95 23.194827
+466it [09:01,  1.17s/it]height 1080 width 1080
+idx 466 case image_466 mean_dice 0.591991 mean_hd95 13.601471
+467it [09:02,  1.14s/it]height 1080 width 1080
+idx 467 case image_467 mean_dice 0.520869 mean_hd95 12.727922
+468it [09:04,  1.19s/it]height 1080 width 1080
+idx 468 case image_468 mean_dice 0.532663 mean_hd95 13.601471
+469it [09:05,  1.22s/it]height 1080 width 1080
+idx 469 case image_469 mean_dice 0.514642 mean_hd95 13.453624
+470it [09:06,  1.24s/it]height 1080 width 1080
+idx 470 case image_470 mean_dice 0.530419 mean_hd95 13.000000
+471it [09:07,  1.25s/it]height 1080 width 1080
+idx 471 case image_471 mean_dice 0.536409 mean_hd95 12.727922
+472it [09:09,  1.25s/it]height 1080 width 1080
+idx 472 case image_472 mean_dice 0.546350 mean_hd95 12.041595
+473it [09:10,  1.24s/it]height 1080 width 1080
+idx 473 case image_473 mean_dice 0.538455 mean_hd95 12.206556
+474it [09:11,  1.26s/it]height 1080 width 1080
+idx 474 case image_474 mean_dice 0.538284 mean_hd95 12.727922
+475it [09:12,  1.25s/it]height 1080 width 1080
+idx 475 case image_475 mean_dice 0.528056 mean_hd95 13.000000
+476it [09:14,  1.26s/it]height 1080 width 1080
+idx 476 case image_476 mean_dice 0.521580 mean_hd95 13.453624
+477it [09:15,  1.26s/it]height 1080 width 1080
+idx 477 case image_477 mean_dice 0.605327 mean_hd95 12.369317
+478it [09:16,  1.23s/it]height 1080 width 1080
+idx 478 case image_478 mean_dice 0.543026 mean_hd95 17.464249
+479it [09:17,  1.19s/it]height 1080 width 1080
+idx 479 case image_479 mean_dice 0.541203 mean_hd95 19.209373
+480it [09:18,  1.18s/it]height 1080 width 1080
+idx 480 case image_480 mean_dice 0.567983 mean_hd95 21.931712
+481it [09:19,  1.16s/it]height 1080 width 1080
+idx 481 case image_481 mean_dice 0.533418 mean_hd95 28.178006
+482it [09:21,  1.15s/it]height 1080 width 1080
+idx 482 case image_482 mean_dice 0.529179 mean_hd95 26.248809
+483it [09:22,  1.12s/it]height 1080 width 1080
+idx 483 case image_483 mean_dice 0.536899 mean_hd95 30.413813
+484it [09:23,  1.12s/it]height 1080 width 1080
+idx 484 case image_484 mean_dice 0.552417 mean_hd95 28.319605
+485it [09:24,  1.12s/it]height 1080 width 1080
+idx 485 case image_485 mean_dice 0.544204 mean_hd95 27.018512
+486it [09:25,  1.13s/it]height 1080 width 1080
+idx 486 case image_486 mean_dice 0.458709 mean_hd95 31.304952
+487it [09:26,  1.13s/it]height 1080 width 1080
+idx 487 case image_487 mean_dice 0.446722 mean_hd95 32.000000
+488it [09:27,  1.13s/it]height 1080 width 1080
+idx 488 case image_488 mean_dice 0.498233 mean_hd95 32.249031
+489it [09:28,  1.13s/it]height 1080 width 1080
+idx 489 case image_489 mean_dice 0.671814 mean_hd95 12.369317
+490it [09:30,  1.15s/it]height 1080 width 1080
+idx 490 case image_490 mean_dice 0.665684 mean_hd95 10.000000
+491it [09:31,  1.21s/it]height 1080 width 1080
+idx 491 case image_491 mean_dice 0.673962 mean_hd95 11.180340
+492it [09:32,  1.25s/it]height 1080 width 1080
+idx 492 case image_492 mean_dice 0.561406 mean_hd95 16.000000
+493it [09:33,  1.23s/it]height 1080 width 1080
+idx 493 case image_493 mean_dice 0.523726 mean_hd95 16.278821
+494it [09:35,  1.23s/it]height 1080 width 1080
+idx 494 case image_494 mean_dice 0.521157 mean_hd95 17.204651
+495it [09:36,  1.21s/it]height 1080 width 1080
+idx 495 case image_495 mean_dice 0.493123 mean_hd95 30.413813
+496it [09:37,  1.18s/it]height 1080 width 1080
+idx 496 case image_496 mean_dice 0.466117 mean_hd95 24.738634
+497it [09:38,  1.18s/it]height 1080 width 1080
+idx 497 case image_497 mean_dice 0.525351 mean_hd95 19.849433
+498it [09:39,  1.20s/it]height 1080 width 1080
+idx 498 case image_498 mean_dice 0.599725 mean_hd95 13.928388
+499it [09:40,  1.15s/it]height 1080 width 1080
+idx 499 case image_499 mean_dice 0.499350 mean_hd95 15.556349
+500it [09:42,  1.18s/it]height 1080 width 1080
+idx 500 case image_500 mean_dice 0.547162 mean_hd95 13.038405
+501it [09:43,  1.19s/it]height 1080 width 1080
+idx 501 case image_501 mean_dice 0.522152 mean_hd95 13.341664
+502it [09:44,  1.22s/it]height 1080 width 1080
+idx 502 case image_502 mean_dice 0.557572 mean_hd95 11.661904
+503it [09:45,  1.24s/it]height 1080 width 1080
+idx 503 case image_503 mean_dice 0.627061 mean_hd95 12.083046
+504it [09:47,  1.21s/it]504it [09:47,  1.17s/it]Mean class 1 mean_dice 0.551625 mean_hd95 19.641420
+Testing performance in best val model: mean_dice : 0.551625 mean_hd95 : 19.641420
+

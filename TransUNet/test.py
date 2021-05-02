@@ -95,8 +95,8 @@ if __name__ == "__main__":
         },
         'University': {
             'Dataset': Synapse_dataset,  # uses same files logic as Synapse
-            'volume_path': '../data/University_dev/test_vol_h5',
-            'list_dir': './lists/lists_University_dev',
+            'volume_path': '../data/University/test_vol_h5',
+            'list_dir': './lists/lists_University',
             'num_classes': 2,
             'z_spacing': 1,
         },
