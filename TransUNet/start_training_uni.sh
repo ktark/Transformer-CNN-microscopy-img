@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH -J NN_TransUnet2
+#SBATCH -J NN_TransUnetUniNew
 #SBATCH --partition=gpu
+#SBATCH --mem=16GB
 #SBATCH -t 12:00:00
 # your code goes below
 module load python-3.7.1

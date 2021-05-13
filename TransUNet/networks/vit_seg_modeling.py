@@ -152,13 +152,13 @@ class Embeddings(nn.Module):
 
 
     def forward(self, x):
-        print('EmbResnet initial:',x.shape)
+        #print('EmbResnet initial:',x.shape)
 
         if self.hybrid:
             x, features = self.hybrid_model(x)
         else:
             features = None
-        print('EmbResnet after hybrid:',x.shape)
+        #print('EmbResnet after hybrid:',x.shape)
 
         x = self.patch_embeddings(x)  # (B, hidden. n_patches^(1/2), n_patches^(1/2))
         x = x.flatten(2)
@@ -192,7 +192,7 @@ class EmbeddingsNoResnet(nn.Module):
 
 
     def forward(self, x):
-        print('EmbNoResnet:',x.shape)
+        #print('EmbNoResnet:',x.shape)
         x = self.patch_embeddings(x)
         x = x.flatten(2)
         x = x.transpose(-1, -2)  # (B, n_patches, hidden)
@@ -403,7 +403,7 @@ class DecoderCup(nn.Module):
         self.blocks = nn.ModuleList(blocks)
 
     def forward(self, hidden_states, features=None):
-        print('DecoderCup hidden state size:', hidden_states.shape)
+        #print('DecoderCup hidden state size:', hidden_states.shape)
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
         x = hidden_states.permute(0, 2, 1)
@@ -468,9 +468,9 @@ class DecoderCupAddTransformer(nn.Module):
         x2 = x2.contiguous().view(B, hidden, h, w)
 
         x = torch.cat([x1, x2], dim=1)
-        print('Decoder+Transfor - before conv:', x.shape, x1.shape, x2.shape)
+        # print('Decoder+Transfor - before conv:', x.shape, x1.shape, x2.shape)
         x = self.conv_more2(x)
-        print('Decoder+Transfor - after conv:', x.shape)
+        #print('Decoder+Transfor - after conv:', x.shape)
 
         #x2 = self.conv_more2(x2)
 
@@ -505,9 +505,9 @@ class VisionTransformer(nn.Module):
         if x.size()[1] == 1:
             x = x.repeat(1,3,1,1)
         x2, attn_weights2 = self.transformerWithoutResnet(x) #input patch_size, channels, image_size, image_size
-        print('Additional transformed output sizes:', x2.shape)
+        #print('Additional transformed output sizes:', x2.shape)
         x, attn_weights, features = self.transformer(x)  # (B, n_patch, hidden)
-        print('Resnet transformed output sizes:', x.shape)
+        #print('Resnet transformed output sizes:', x.shape)
         x = self.decoder(x, x2, features)
         logits = self.segmentation_head(x)
         return logits
