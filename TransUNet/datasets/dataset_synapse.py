@@ -73,3 +73,38 @@ class Synapse_dataset(Dataset):
             sample = self.transform(sample)
         sample['case_name'] = self.sample_list[idx].strip('\n')
         return sample
+
+
+class University_dataset(Dataset):
+    def __init__(self, base_dir, list_dir, split, transform=None):
+        self.transform = transform
+        self.split = split
+        self.sample_list = open(os.path.join(list_dir, self.split + '.txt')).readlines()
+        self.data_dir = base_dir
+
+    def __len__(self):
+        return len(self.sample_list)
+
+    def __getitem__(self, idx):
+        if self.split == "train":
+            slice_name = self.sample_list[idx].strip('\n')
+            data_path = os.path.join(self.data_dir, slice_name + '.npz')
+            data = np.load(data_path)
+            image, label = data['image'], data['label']
+        else:
+            vol_name = self.sample_list[idx].strip('\n')
+            filepath = self.data_dir + "/{}.npy.h5".format(vol_name)
+            data = h5py.File(filepath)
+            image, label = data['image'][:], data['label'][:]
+
+        if self.transform:
+            augmentations = self.transform(image=image, mask=label)
+            image = augmentations["image"]
+            label = augmentations['mask']
+
+        image = torch.from_numpy(image.astype(np.float32)).unsqueeze(0)
+        label = torch.from_numpy(label.astype(np.float32))
+
+        sample = {'image': image, 'label': label.long(), 'case_name': self.sample_list[idx].strip('\n')}
+
+        return sample

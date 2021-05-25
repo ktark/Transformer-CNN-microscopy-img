@@ -5,3 +5,8 @@
 /articles/
 /.ipynb_checkpoints/
 /.idea
+.ipynb_checkpoints
+Dataset
+*.pdf
+*__pycache__*
+tensorboard*

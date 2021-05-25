@@ -152,14 +152,10 @@ class Embeddings(nn.Module):
 
 
     def forward(self, x):
-        #print('EmbResnet initial:',x.shape)
-
         if self.hybrid:
             x, features = self.hybrid_model(x)
         else:
             features = None
-        #print('EmbResnet after hybrid:',x.shape)
-
         x = self.patch_embeddings(x)  # (B, hidden. n_patches^(1/2), n_patches^(1/2))
         x = x.flatten(2)
         x = x.transpose(-1, -2)  # (B, n_patches, hidden)
@@ -167,40 +163,6 @@ class Embeddings(nn.Module):
         embeddings = x + self.position_embeddings
         embeddings = self.dropout(embeddings)
         return embeddings, features
-
-
-#additional embeddings without grid and resnet
-class EmbeddingsNoResnet(nn.Module):
-    """Construct the embeddings from patch, position embeddings.
-    """
-    def __init__(self, config, img_size, in_channels=3):
-        super(EmbeddingsNoResnet, self).__init__()
-        self.hybrid = None
-        self.config = config
-        img_size = _pair(img_size)
-
-        patch_size = _pair(config.patches["size"])
-        n_patches = (img_size[0] // patch_size[0]) * (img_size[1] // patch_size[1])
-
-        self.patch_embeddings = Conv2d(in_channels=in_channels,
-                                       out_channels=config.hidden_size,
-                                       kernel_size=patch_size,
-                                       stride=patch_size)
-        self.position_embeddings = nn.Parameter(torch.zeros(1, n_patches, config.hidden_size))
-
-        self.dropout = Dropout(config.transformer["dropout_rate"])
-
-
-    def forward(self, x):
-        #print('EmbNoResnet:',x.shape)
-        x = self.patch_embeddings(x)
-        x = x.flatten(2)
-        x = x.transpose(-1, -2)  # (B, n_patches, hidden)
-
-        embeddings = x + self.position_embeddings
-        embeddings = self.dropout(embeddings)
-        return embeddings
-
 
 
 class Block(nn.Module):
@@ -285,25 +247,13 @@ class Encoder(nn.Module):
 class Transformer(nn.Module):
     def __init__(self, config, img_size, vis):
         super(Transformer, self).__init__()
-        self.embeddings = Embeddings(config, img_size=img_size) # size (B, n_path, hidden) ?
+        self.embeddings = Embeddings(config, img_size=img_size)
         self.encoder = Encoder(config, vis)
 
     def forward(self, input_ids):
         embedding_output, features = self.embeddings(input_ids)
         encoded, attn_weights = self.encoder(embedding_output)  # (B, n_patch, hidden)
         return encoded, attn_weights, features
-
-#Kaarel added
-class TransformerWithoutResnet(nn.Module):
-    def __init__(self, config, img_size, vis):
-        super(TransformerWithoutResnet, self).__init__()
-        self.embeddings = EmbeddingsNoResnet(config, img_size=img_size) # size (B, n_path, hidden) ?
-        self.encoder = Encoder(config, vis)
-
-    def forward(self, input_ids):
-        embedding_output = self.embeddings(input_ids)
-        encoded, attn_weights = self.encoder(embedding_output)
-        return encoded, attn_weights
 
 
 class Conv2dReLU(nn.Sequential):
@@ -379,7 +329,7 @@ class DecoderCup(nn.Module):
         self.config = config
         head_channels = 512
         self.conv_more = Conv2dReLU(
-            config.hidden_size*2,
+            config.hidden_size,
             head_channels,
             kernel_size=3,
             padding=1,
@@ -403,7 +353,6 @@ class DecoderCup(nn.Module):
         self.blocks = nn.ModuleList(blocks)
 
     def forward(self, hidden_states, features=None):
-        #print('DecoderCup hidden state size:', hidden_states.shape)
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
         x = hidden_states.permute(0, 2, 1)
@@ -417,72 +366,6 @@ class DecoderCup(nn.Module):
             x = decoder_block(x, skip=skip)
         return x
 
-class DecoderCupAddTransformer(nn.Module):
-    def __init__(self, config):
-        super().__init__()
-        self.config = config
-        head_channels = 512
-        self.conv_more = Conv2dReLU(
-            config.hidden_size,
-            head_channels,
-            kernel_size=3,
-            padding=1,
-            use_batchnorm=True,
-        )
-        self.conv_more2 = Conv2dReLU(
-            config.hidden_size*2,
-            head_channels,
-            kernel_size=3,
-            padding=1,
-            use_batchnorm=True,
-        )
-        decoder_channels = config.decoder_channels
-        in_channels = [head_channels] + list(decoder_channels[:-1])
-        out_channels = decoder_channels
-
-        if self.config.n_skip != 0:
-            skip_channels = self.config.skip_channels
-            for i in range(4-self.config.n_skip):  # re-select the skip channels according to n_skip
-                skip_channels[3-i]=0
-
-        else:
-            skip_channels=[0,0,0,0]
-
-        blocks = [
-            DecoderBlock(in_ch, out_ch, sk_ch) for in_ch, out_ch, sk_ch in zip(in_channels, out_channels, skip_channels)
-        ]
-        self.blocks = nn.ModuleList(blocks)
-
-    def forward(self, x1, x2, features=None):
-        hidden_states = x1 #torch.cat([x1, x2], dim = 2)
-
-        B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
-        h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
-
-        x1 = x1.permute(0, 2, 1)
-        x1 = x1.contiguous().view(B, hidden, h, w)
-
-        #x1 = self.conv_more(x1)
-
-        x2 = x2.permute(0, 2, 1)
-        x2 = x2.contiguous().view(B, hidden, h, w)
-
-        x = torch.cat([x1, x2], dim=1)
-        # print('Decoder+Transfor - before conv:', x.shape, x1.shape, x2.shape)
-        x = self.conv_more2(x)
-        #print('Decoder+Transfor - after conv:', x.shape)
-
-        #x2 = self.conv_more2(x2)
-
-        for i, decoder_block in enumerate(self.blocks):
-            if features is not None:
-                skip = features[i] if (i < self.config.n_skip) else None
-            else:
-                skip = None
-            x = decoder_block(x, skip=skip)
-        return x
-
-
 
 class VisionTransformer(nn.Module):
     def __init__(self, config, img_size=224, num_classes=21843, zero_head=False, vis=False):
@@ -491,9 +374,7 @@ class VisionTransformer(nn.Module):
         self.zero_head = zero_head
         self.classifier = config.classifier
         self.transformer = Transformer(config, img_size, vis)
-        self.transformerWithoutResnet = TransformerWithoutResnet(config, img_size, vis)
-        #self.decoder = DecoderCup(config)
-        self.decoder = DecoderCupAddTransformer(config)
+        self.decoder = DecoderCup(config)
         self.segmentation_head = SegmentationHead(
             in_channels=config['decoder_channels'][-1],
             out_channels=config['n_classes'],
@@ -504,11 +385,8 @@ class VisionTransformer(nn.Module):
     def forward(self, x):
         if x.size()[1] == 1:
             x = x.repeat(1,3,1,1)
-        x2, attn_weights2 = self.transformerWithoutResnet(x) #input patch_size, channels, image_size, image_size
-        #print('Additional transformed output sizes:', x2.shape)
         x, attn_weights, features = self.transformer(x)  # (B, n_patch, hidden)
-        #print('Resnet transformed output sizes:', x.shape)
-        x = self.decoder(x, x2, features)
+        x = self.decoder(x, features)
         logits = self.segmentation_head(x)
         return logits
 
