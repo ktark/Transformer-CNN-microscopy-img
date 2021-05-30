@@ -12,6 +12,7 @@ from tqdm import tqdm
 from datasets.dataset_synapse import Synapse_dataset
 from utils import test_single_volume
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
+from networks.vit_set_modeling_cnn import VisionTransformer as ViT_seg_add_cnn
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 
 parser = argparse.ArgumentParser()
@@ -41,6 +42,8 @@ parser.add_argument('--seed', type=int, default=1234, help='random seed')
 parser.add_argument('--vit_patches_size', type=int, default=16, help='vit_patches_size, default is 16')
 parser.add_argument('--crop', type=int,
                     default=1, help='whether to use random cropping, crops to img_size, overwrites resize')
+parser.add_argument('--add_cnn', type=int,
+                    default=0, help='if to use model with additional CNN from input to bottleneck')
 args = parser.parse_args()
 
 
@@ -126,6 +129,7 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop' + str(args.crop)
+    snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
 
     config_vit = CONFIGS_ViT_seg[args.vit_name]
     config_vit.n_classes = args.num_classes
