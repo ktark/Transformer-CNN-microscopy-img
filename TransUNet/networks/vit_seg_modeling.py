@@ -19,9 +19,7 @@ from scipy import ndimage
 from . import vit_seg_configs as configs
 from .vit_seg_modeling_resnet_skip import ResNetV2
 
-
 logger = logging.getLogger(__name__)
-
 
 ATTENTION_Q = "MultiHeadDotProductAttention_1/query"
 ATTENTION_K = "MultiHeadDotProductAttention_1/key"
@@ -128,11 +126,11 @@ class Embeddings(nn.Module):
         self.config = config
         img_size = _pair(img_size)
 
-        if config.patches.get("grid") is not None:   # ResNet
+        if config.patches.get("grid") is not None:  # ResNet
             grid_size = config.patches["grid"]
             patch_size = (img_size[0] // 16 // grid_size[0], img_size[1] // 16 // grid_size[1])
             patch_size_real = (patch_size[0] * 16, patch_size[1] * 16)
-            n_patches = (img_size[0] // patch_size_real[0]) * (img_size[1] // patch_size_real[1])  
+            n_patches = (img_size[0] // patch_size_real[0]) * (img_size[1] // patch_size_real[1])
             self.hybrid = True
         else:
             patch_size = _pair(config.patches["size"])
@@ -150,19 +148,20 @@ class Embeddings(nn.Module):
 
         self.dropout = Dropout(config.transformer["dropout_rate"])
 
-
     def forward(self, x):
         if self.hybrid:
-            x, features = self.hybrid_model(x)
+            resnet_output, features = self.hybrid_model(x)  # Resnet output
+            x = resnet_output
         else:
             features = None
+            resnet_output = None
         x = self.patch_embeddings(x)  # (B, hidden. n_patches^(1/2), n_patches^(1/2))
         x = x.flatten(2)
         x = x.transpose(-1, -2)  # (B, n_patches, hidden)
 
         embeddings = x + self.position_embeddings
         embeddings = self.dropout(embeddings)
-        return embeddings, features
+        return embeddings, features, resnet_output
 
 
 class Block(nn.Module):
@@ -251,9 +250,9 @@ class Transformer(nn.Module):
         self.encoder = Encoder(config, vis)
 
     def forward(self, input_ids):
-        embedding_output, features = self.embeddings(input_ids)
+        embedding_output, features, resnet_output = self.embeddings(input_ids)
         encoded, attn_weights = self.encoder(embedding_output)  # (B, n_patch, hidden)
-        return encoded, attn_weights, features
+        return encoded, attn_weights, features, embedding_output
 
 
 class Conv2dReLU(nn.Sequential):
@@ -352,10 +351,13 @@ class DecoderCup(nn.Module):
         ]
         self.blocks = nn.ModuleList(blocks)
 
-    def forward(self, hidden_states, features=None):
+    def forward(self, hidden_states, cnn_embeddings, features=None):
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
+
         x = hidden_states.permute(0, 2, 1)
+        x2 = cnn_embeddings.permute(0, 2, 1)
+        x = x + x2
         x = x.contiguous().view(B, hidden, h, w)
         x = self.conv_more(x)
         for i, decoder_block in enumerate(self.blocks):
@@ -384,9 +386,9 @@ class VisionTransformer(nn.Module):
 
     def forward(self, x):
         if x.size()[1] == 1:
-            x = x.repeat(1,3,1,1)
-        x, attn_weights, features = self.transformer(x)  # (B, n_patch, hidden)
-        x = self.decoder(x, features)
+            x = x.repeat(1, 3, 1, 1)
+        x, attn_weights, features, cnn_embeddings = self.transformer(x)  # (B, n_patch, hidden)
+        x = self.decoder(x, cnn_embeddings, features)
         logits = self.segmentation_head(x)
         return logits
 
@@ -405,7 +407,7 @@ class VisionTransformer(nn.Module):
             posemb_new = self.transformer.embeddings.position_embeddings
             if posemb.size() == posemb_new.size():
                 self.transformer.embeddings.position_embeddings.copy_(posemb)
-            elif posemb.size()[1]-1 == posemb_new.size()[1]:
+            elif posemb.size()[1] - 1 == posemb_new.size()[1]:
                 posemb = posemb[:, 1:]
                 self.transformer.embeddings.position_embeddings.copy_(posemb)
             else:
@@ -449,5 +451,3 @@ CONFIGS = {
     'R50-ViT-L_16': configs.get_r50_l16_config(),
     'testing': configs.get_testing(),
 }
-
-
