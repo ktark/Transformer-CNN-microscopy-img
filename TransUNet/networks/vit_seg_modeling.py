@@ -150,18 +150,18 @@ class Embeddings(nn.Module):
 
     def forward(self, x):
         if self.hybrid:
-            resnet_output, features = self.hybrid_model(x)  # Resnet output
-            x = resnet_output
+            x, features = self.hybrid_model(x)  # Resnet output
         else:
             features = None
-            resnet_output = None
         x = self.patch_embeddings(x)  # (B, hidden. n_patches^(1/2), n_patches^(1/2))
         x = x.flatten(2)
         x = x.transpose(-1, -2)  # (B, n_patches, hidden)
 
         embeddings = x + self.position_embeddings
         embeddings = self.dropout(embeddings)
-        return embeddings, features, resnet_output
+
+        x = self.dropout(x)
+        return embeddings, features, x
 
 
 class Block(nn.Module):
@@ -351,12 +351,13 @@ class DecoderCup(nn.Module):
         ]
         self.blocks = nn.ModuleList(blocks)
 
-    def forward(self, hidden_states, cnn_embeddings, features=None):
+    def forward(self, hidden_states, hidden_states_2, features=None):
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
 
         x = hidden_states.permute(0, 2, 1)
-        x2 = cnn_embeddings.permute(0, 2, 1)
+        x2 = hidden_states_2.permute(0, 2, 1)
+
         x = x + x2
         x = x.contiguous().view(B, hidden, h, w)
         x = self.conv_more(x)
@@ -387,8 +388,8 @@ class VisionTransformer(nn.Module):
     def forward(self, x):
         if x.size()[1] == 1:
             x = x.repeat(1, 3, 1, 1)
-        x, attn_weights, features, cnn_embeddings = self.transformer(x)  # (B, n_patch, hidden)
-        x = self.decoder(x, cnn_embeddings, features)
+        x, attn_weights, features, x2 = self.transformer(x)  # (B, n_patch, hidden)
+        x = self.decoder(x, x2, features)
         logits = self.segmentation_head(x)
         return logits
 
