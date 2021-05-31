@@ -71,11 +71,10 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
                 slice_big = image[ind, :, :]
                 x, y = slice_big.shape[0], slice_big.shape[1]
                 ratio_x, ratio_y = x // patch_size[0] + 1, y // patch_size[1] + 1
-                ratio_batch_size_x, ratio_batch_size_y = x // ratio_x + 1, y // ratio_y + 1  # Partial overlap
                 for i in range(ratio_x):
                     for j in range(ratio_y):
-                        x_crop = np.min([i * ratio_batch_size_x, x - patch_size[0]])  # So it wouldn't exceed the image.
-                        y_crop = np.min([j * ratio_batch_size_y, y - patch_size[1]])
+                        x_crop = np.min([i * patch_size[0], x - patch_size[0]])
+                        y_crop = np.min([j * patch_size[1], y - patch_size[1]])
                         slice = slice_big[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]]
                         crops.append([x_crop, y_crop])
                         input = torch.from_numpy(slice).unsqueeze(0).unsqueeze(0).float().cuda()
@@ -86,21 +85,11 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
                             out = out.cpu().detach().numpy()
                             preds.append(out)
 
+                # //TODO fix below 5, so it would take average not overwrite while mosaicing.
                 pred = np.zeros([x, y])
-                coverage = np.zeros([x, y])
                 for i, crop in enumerate(crops):
                     x_crop, y_crop = crop
-
-                    mask = coverage[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] > 0  # overlap mask
-                    if np.sum(mask) > 0:
-                        current_pred = preds[i]
-                        overlap_pred = pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]][mask]
-                        current_pred[mask][overlap_pred != current_pred[mask]] = 0  # where they don't agree it's 0
-                        pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = current_pred
-                    else:
-                        pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = preds[i]
-
-                    coverage[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] += 1
+                    pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = preds[i]
 
                 prediction[ind] = pred
 
