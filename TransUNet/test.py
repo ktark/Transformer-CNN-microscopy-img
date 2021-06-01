@@ -45,6 +45,8 @@ parser.add_argument('--crop', type=int,
                     default=1, help='whether to use random cropping, crops to img_size, overwrites resize')
 parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
+parser.add_argument('--stb', type=int,
+                    default=0, help='Resnet skip connection to bottleneck')
 args = parser.parse_args()
 
 
@@ -130,9 +132,12 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop' + str(args.crop)
-    snapshot_path = snapshot_path + '_adam'+str(args.adam)
-    snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
-    snapshot_path = snapshot_path + '_stb'+str(args.stb)
+    if args.add_cnn == 1:
+        snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
+    if args.adam == 1:
+        snapshot_path = snapshot_path + '_adam'+str(args.adam)
+    if args.stb == 1:
+        snapshot_path = snapshot_path + '_stb'+str(args.stb)
 
     config_vit = CONFIGS_ViT_seg[args.vit_name]
     config_vit.n_classes = args.num_classes
@@ -140,9 +145,7 @@ if __name__ == "__main__":
     config_vit.patches.size = (args.vit_patches_size, args.vit_patches_size)
     if args.vit_name.find('R50') !=-1:
         config_vit.patches.grid = (int(args.img_size/args.vit_patches_size), int(args.img_size/args.vit_patches_size))
-    if args.add_cnn == 1:
-        net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
-    elif args.stb == 1:
+    if args.stb == 1:
         net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
     else:
         net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
