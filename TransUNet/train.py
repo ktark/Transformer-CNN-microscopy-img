@@ -42,6 +42,8 @@ parser.add_argument('--vit_patches_size', type=int,
                     default=16, help='vit_patches_size, default is 16')
 parser.add_argument('--crop', type=int,
                     default=0, help='whether to use random cropping, crops to img_size, overwrites resize')
+parser.add_argument('--adam', type=int,
+                    default=0, help='adam instead of SGD for training')
 parser.add_argument('--add_cnn', type=int,
                     default=0, help='if to use model with additional CNN from input to bottleneck')
 args = parser.parse_args()
@@ -98,6 +100,7 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop'+str(args.crop)
     snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
+    snapshot_path = snapshot_path + '_adam'+str(args.adam)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
