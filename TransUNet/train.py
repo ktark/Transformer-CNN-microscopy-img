@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
+from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 from networks.vit_set_modeling_cnn import VisionTransformer as ViT_seg_add_cnn
 from trainer import trainer_synapse, trainer_university
@@ -46,6 +47,9 @@ parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
 parser.add_argument('--add_cnn', type=int,
                     default=0, help='if to use model with additional CNN from input to bottleneck')
+parser.add_argument('--stb', type=int,
+                    default=0, help='Resnet skip connection to bottleneck')
+
 args = parser.parse_args()
 
 
@@ -101,6 +105,7 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_crop'+str(args.crop)
     snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
     snapshot_path = snapshot_path + '_adam'+str(args.adam)
+    snapshot_path = snapshot_path + '_stb'+str(args.stb)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
@@ -111,9 +116,11 @@ if __name__ == "__main__":
         config_vit.patches.grid = (int(args.img_size / args.vit_patches_size), int(args.img_size / args.vit_patches_size))
     if args.add_cnn == 1:
         net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
-        print("ADDITIONAL CNN PATH")
+    elif args.stb == 1:
+        net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
     else:
         net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+
     net.load_from(weights=np.load(config_vit.pretrained_path))
 
     trainer = {'Synapse': trainer_synapse,

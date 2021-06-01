@@ -350,13 +350,12 @@ class DecoderCup(nn.Module):
         ]
         self.blocks = nn.ModuleList(blocks)
 
-    def forward(self, hidden_states, hidden_states_2, features=None):
+    def forward(self, hidden_states, features=None):
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
 
         x = hidden_states.permute(0, 2, 1)
-        x2 = hidden_states_2.permute(0, 2, 1)
-        x = x.add(x2, alpha=50)
+
         x = x.contiguous().view(B, hidden, h, w)
         x = self.conv_more(x)
         for i, decoder_block in enumerate(self.blocks):
@@ -386,8 +385,8 @@ class VisionTransformer(nn.Module):
     def forward(self, x):
         if x.size()[1] == 1:
             x = x.repeat(1, 3, 1, 1)
-        x, attn_weights, features, x2 = self.transformer(x)  # (B, n_patch, hidden)
-        x = self.decoder(x, x2, features)
+        x, attn_weights, features, _ = self.transformer(x)  # (B, n_patch, hidden)
+        x = self.decoder(x, features)
         logits = self.segmentation_head(x)
         return logits
 
@@ -439,6 +438,18 @@ class VisionTransformer(nn.Module):
                 for bname, block in self.transformer.embeddings.hybrid_model.body.named_children():
                     for uname, unit in block.named_children():
                         unit.load_from(res_weight, n_block=bname, n_unit=uname)
+
+
+class VisionTransformerResSkip(VisionTransformer):
+    def forward(self, x):
+        if x.size()[1] == 1:
+            x = x.repeat(1, 3, 1, 1)
+        x, attn_weights, features, x2 = self.transformer(x)  # (B, n_patch, hidden)
+        x = x.add(x2, alpha=50)
+        x = self.decoder(x, features)
+        logits = self.segmentation_head(x)
+        return logits
+
 
 CONFIGS = {
     'ViT-B_16': configs.get_b16_config(),
