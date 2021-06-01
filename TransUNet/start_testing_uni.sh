@@ -3,7 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH -t 12:00:00
 #SBATCH --mem=32GB
-#SBATCH --nodelist=falcon2
+#SBATCH --nodelist=falcon5
 # your code goes below
 module load python-3.7.1
 source ../../../paper_replication/TransUNet/NNproject/bin/activate

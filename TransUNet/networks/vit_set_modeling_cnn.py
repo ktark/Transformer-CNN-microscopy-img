@@ -178,40 +178,40 @@ class AdditionalCnn2(nn.Module):
 
         self.config = config
 
-        self.cnn1 = Conv2d(in_channels=3,
-                           out_channels=512,
-                           kernel_size=3,
-                           stride=1,
-                           padding = 1)
-        self.maxpool1 = MaxPool2d(2, stride=2)
-        self.batchnorm1 = BatchNorm2d(512)
-        self.cnn2 = Conv2d(in_channels=512,
-                           out_channels=512,
-                           kernel_size=4,
-                           stride=2,
-                           padding=1)
-        self.maxpool2 = MaxPool2d(2, stride=2)
-        self.batchnorm2 = BatchNorm2d(512)
-        self.cnn3 = Conv2d(in_channels=512,
-                           out_channels=512,
-                           kernel_size=4,
-                           stride=2,
-                           padding=1)
-        self.batchnorm3 = BatchNorm2d(512)
-
+        # self.cnn1 = Conv2d(in_channels=3,
+        #                    out_channels=512,
+        #                    kernel_size=3,
+        #                    stride=1,
+        #                    padding = 1)
+        # self.maxpool1 = MaxPool2d(2, stride=2)
+        # self.batchnorm1 = BatchNorm2d(512)
+        # self.cnn2 = Conv2d(in_channels=512,
+        #                    out_channels=512,
+        #                    kernel_size=4,
+        #                    stride=2,
+        #                    padding=1)
+        # self.maxpool2 = MaxPool2d(2, stride=2)
+        # self.batchnorm2 = BatchNorm2d(512)
+        # self.cnn3 = Conv2d(in_channels=512,
+        #                    out_channels=512,
+        #                    kernel_size=4,
+        #                    stride=2,
+        #                    padding=1)
+        # self.batchnorm3 = BatchNorm2d(512)
+        self.resnetAddInput = ResNetV2(block_units=config.resnet.num_layers, width_factor=config.resnet.width_factor)
     def forward(self, x):
-
+        x, features = self.resnetAddInput(x)
         #print('AdditionalCNN input shape:',x.shape)
-        x = self.cnn1(x)
-        x = self.maxpool1(x)
-        x = self.batchnorm1(x)
-
-        x = self.cnn2(x)
-        x = self.maxpool2(x)
-        x = self.batchnorm2(x)
-
-        x = self.cnn3(x)
-        x = self.batchnorm3(x)
+        # x = self.cnn1(x)
+        # x = self.maxpool1(x)
+        # x = self.batchnorm1(x)
+        #
+        # x = self.cnn2(x)
+        # x = self.maxpool2(x)
+        # x = self.batchnorm2(x)
+        #
+        # x = self.cnn3(x)
+        # x = self.batchnorm3(x)
 
         return x
 
@@ -429,7 +429,13 @@ class DecoderCupAddCNN(nn.Module):
             padding=1,
             use_batchnorm=True,
         )
-
+        self.conv_more2 = Conv2dReLU(
+            1024,
+            head_channels,
+            kernel_size=3,
+            padding=1,
+            use_batchnorm=True,
+        )
         decoder_channels = config.decoder_channels
         in_channels = [head_channels] + list(decoder_channels[:-1])
         out_channels = decoder_channels
@@ -458,7 +464,7 @@ class DecoderCupAddCNN(nn.Module):
 
         x1 = self.conv_more(x1)
         #print('x1 shape:',x1.shape)
-
+        x2 = self.conv_more2(x2)
         #x2 = x2.permute(0, 1, 2, 3) #no permute
         #print('x2 shape:',x2.shape)
         #x2 = x2.contiguous().view(B, hidden, h, w)
@@ -549,6 +555,19 @@ class VisionTransformer(nn.Module):
                 for bname, block in self.transformer.embeddings.hybrid_model.body.named_children():
                     for uname, unit in block.named_children():
                         unit.load_from(res_weight, n_block=bname, n_unit=uname)
+
+            #Additional CNN weights
+            self.additionalCnn.resnetAddInput.root.conv.weight.copy_(np2th(res_weight["conv_root/kernel"], conv=True))
+            gn_weight = np2th(res_weight["gn_root/scale"]).view(-1)
+            gn_bias = np2th(res_weight["gn_root/bias"]).view(-1)
+            self.additionalCnn.resnetAddInput.root.gn.weight.copy_(gn_weight)
+            self.additionalCnn.resnetAddInput.root.gn.bias.copy_(gn_bias)
+
+            for bname, block in self.additionalCnn.resnetAddInput.body.named_children():
+                for uname, unit in block.named_children():
+                    unit.load_from(res_weight, n_block=bname, n_unit=uname)
+
+
 
 CONFIGS = {
     'ViT-B_16': configs.get_b16_config(),
