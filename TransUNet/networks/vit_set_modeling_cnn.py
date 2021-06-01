@@ -436,6 +436,14 @@ class DecoderCupAddCNN(nn.Module):
             padding=1,
             use_batchnorm=True,
         )
+        self.conv_more3 = Conv2dReLU(
+            1024,
+            head_channels,
+            kernel_size=3,
+            padding=1,
+            use_batchnorm=False,
+        )
+
         decoder_channels = config.decoder_channels
         in_channels = [head_channels] + list(decoder_channels[:-1])
         out_channels = decoder_channels
@@ -462,14 +470,17 @@ class DecoderCupAddCNN(nn.Module):
         x1 = x1.permute(0, 2, 1)
         x1 = x1.contiguous().view(B, hidden, h, w)
 
+
         x1 = self.conv_more(x1)
         #print('x1 shape:',x1.shape)
         x2 = self.conv_more2(x2)
+        x = torch.cat([x1, x2], dim=1)
+        x = self.conv_more3(x)
         #x2 = x2.permute(0, 1, 2, 3) #no permute
         #print('x2 shape:',x2.shape)
         #x2 = x2.contiguous().view(B, hidden, h, w)
 
-        x = x1 + x2 #add the signal from CNN and transformer Bx512x14x14
+        #x = x1 + x2 #add the signal from CNN and transformer Bx512x14x14
 
 
         for i, decoder_block in enumerate(self.blocks):
