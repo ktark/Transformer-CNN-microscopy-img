@@ -6,6 +6,7 @@ import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
+from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 from trainer import trainer_synapse, trainer_university
 
@@ -43,6 +44,8 @@ parser.add_argument('--crop', type=int,
                     default=0, help='whether to use random cropping, crops to img_size, overwrites resize')
 parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
+parser.add_argument('--stb', type=int,
+                    default=0, help='Resnet skip connection to bottleneck')
 
 args = parser.parse_args()
 
@@ -98,6 +101,7 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop'+str(args.crop)
     snapshot_path = snapshot_path + '_adam'+str(args.adam)
+    snapshot_path = snapshot_path + '_stb'+str(args.stb)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
@@ -106,7 +110,12 @@ if __name__ == "__main__":
     config_vit.n_skip = args.n_skip
     if args.vit_name.find('R50') != -1:
         config_vit.patches.grid = (int(args.img_size / args.vit_patches_size), int(args.img_size / args.vit_patches_size))
-    net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+
+    if args.stb == 1:
+        net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    else:
+        net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+
     net.load_from(weights=np.load(config_vit.pretrained_path))
 
     trainer = {'Synapse': trainer_synapse,

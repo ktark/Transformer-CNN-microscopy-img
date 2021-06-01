@@ -12,6 +12,7 @@ from tqdm import tqdm
 from datasets.dataset_synapse import Synapse_dataset
 from utils import test_single_volume
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
+from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 
 parser = argparse.ArgumentParser()
@@ -129,6 +130,7 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop' + str(args.crop)
     snapshot_path = snapshot_path + '_adam'+str(args.adam)
+    snapshot_path = snapshot_path + '_stb'+str(args.stb)
 
     config_vit = CONFIGS_ViT_seg[args.vit_name]
     config_vit.n_classes = args.num_classes
@@ -136,7 +138,10 @@ if __name__ == "__main__":
     config_vit.patches.size = (args.vit_patches_size, args.vit_patches_size)
     if args.vit_name.find('R50') !=-1:
         config_vit.patches.grid = (int(args.img_size/args.vit_patches_size), int(args.img_size/args.vit_patches_size))
-    net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    if args.stb == 1:
+        net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    else:
+        net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
 
     snapshot = os.path.join(snapshot_path, 'best_model.pth')
     if not os.path.exists(snapshot): snapshot = snapshot.replace('best_model', 'epoch_'+str(args.max_epochs-1))
