@@ -10,6 +10,7 @@ import torch.nn as nn
 import torch.optim as optim
 from tensorboardX import SummaryWriter
 from torch.nn.modules.loss import CrossEntropyLoss
+from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from utils import DiceLoss
@@ -146,17 +147,31 @@ def trainer_university(args, model, snapshot_path):
     logging.info("{} iterations per epoch. {} max iterations ".format(len(trainloader), max_iterations))
     best_performance = 0.0
     iterator = tqdm(range(max_epoch), ncols=70)
+    scaler = GradScaler()
     for epoch_num in iterator:
         for i_batch, sampled_batch in enumerate(trainloader):
             image_batch, label_batch = sampled_batch['image'], sampled_batch['label']
             image_batch, label_batch = image_batch.cuda(), label_batch.cuda()
-            outputs = model(image_batch)
-            loss_ce = ce_loss(outputs, label_batch[:].long())
-            loss_dice = dice_loss(outputs, label_batch, softmax=True)
-            loss = 0.5 * loss_ce + 0.5 * loss_dice
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+
+            if args.amp == 1:
+                with autocast():
+                    outputs = model(image_batch)
+                    loss_ce = ce_loss(outputs, label_batch[:].long())
+                    loss_dice = dice_loss(outputs, label_batch, softmax=True)
+                    loss = 0.5 * loss_ce + 0.5 * loss_dice
+                optimizer.zero_grad()
+                scaler.scale(loss).backward()
+                scaler.step(optimizer)
+                scaler.update()
+
+            else:
+                outputs = model(image_batch)
+                loss_ce = ce_loss(outputs, label_batch[:].long())
+                loss_dice = dice_loss(outputs, label_batch, softmax=True)
+                loss = 0.5 * loss_ce + 0.5 * loss_dice
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
             lr_ = base_lr * (1.0 - iter_num / max_iterations) ** 0.9
             for param_group in optimizer.param_groups:
                 param_group['lr'] = lr_
