@@ -137,7 +137,11 @@ if __name__ == "__main__":
     config_vit.patches.size = (args.vit_patches_size, args.vit_patches_size)
     if args.vit_name.find('R50') !=-1:
         config_vit.patches.grid = (int(args.img_size/args.vit_patches_size), int(args.img_size/args.vit_patches_size))
-    net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    if args.add_cnn == 1:
+        net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+        print("ADDITIONAL CNN PATH")
+    else:
+        net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
 
     snapshot = os.path.join(snapshot_path, 'best_model.pth')
     if not os.path.exists(snapshot): snapshot = snapshot.replace('best_model', 'epoch_'+str(args.max_epochs-1))
