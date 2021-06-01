@@ -108,7 +108,6 @@ def trainer_university(args, model, snapshot_path):
     num_classes = args.num_classes
     batch_size = args.batch_size * args.n_gpu
     cropping = args.crop
-    # max_iterations = args.max_iterations
     if cropping == 1:
         db_train = University_dataset(base_dir=args.root_path, list_dir=args.list_dir, split="train",
                                       transform=A.Compose([
@@ -135,7 +134,11 @@ def trainer_university(args, model, snapshot_path):
     model.train()
     ce_loss = CrossEntropyLoss()
     dice_loss = DiceLoss(num_classes)
-    optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
+    if args.adam == 1:
+        optimizer = optim.Adam(model.parameters(), lr=base_lr)
+    else:
+        optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
+
     writer = SummaryWriter(snapshot_path + '/log')
     iter_num = 0
     max_epoch = args.max_epochs
