@@ -160,7 +160,6 @@ class Embeddings(nn.Module):
         embeddings = x + self.position_embeddings
         embeddings = self.dropout(embeddings)
 
-        x = self.dropout(x)
         return embeddings, features, x
 
 
@@ -250,9 +249,9 @@ class Transformer(nn.Module):
         self.encoder = Encoder(config, vis)
 
     def forward(self, input_ids):
-        embedding_output, features, resnet_output = self.embeddings(input_ids)
+        embedding_output, features, out = self.embeddings(input_ids)
         encoded, attn_weights = self.encoder(embedding_output)  # (B, n_patch, hidden)
-        return encoded, attn_weights, features, embedding_output
+        return encoded, attn_weights, features, out
 
 
 class Conv2dReLU(nn.Sequential):
@@ -357,8 +356,7 @@ class DecoderCup(nn.Module):
 
         x = hidden_states.permute(0, 2, 1)
         x2 = hidden_states_2.permute(0, 2, 1)
-
-        x = x + x2
+        x = x.add(x2, alpha=50)
         x = x.contiguous().view(B, hidden, h, w)
         x = self.conv_more(x)
         for i, decoder_block in enumerate(self.blocks):
