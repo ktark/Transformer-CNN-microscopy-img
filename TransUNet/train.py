@@ -46,7 +46,7 @@ parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
 parser.add_argument('--stb', type=int,
                     default=0, help='Resnet skip connection to bottleneck')
-parser.add_argument('--adam', type=int,
+parser.add_argument('--amp', type=int,
                     default=0, help='toggle automatic mixed proccessing (AMP) for training')
 
 args = parser.parse_args()
