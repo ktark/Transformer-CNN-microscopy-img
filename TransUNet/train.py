@@ -49,7 +49,7 @@ parser.add_argument('--add_cnn', type=int,
                     default=0, help='if to use model with additional CNN from input to bottleneck')
 parser.add_argument('--stb', type=int,
                     default=0, help='Resnet skip connection to bottleneck')
-parser.add_argument('--adam', type=int,
+parser.add_argument('--amp', type=int,
                     default=0, help='toggle automatic mixed proccessing (AMP) for training')
 
 args = parser.parse_args()
