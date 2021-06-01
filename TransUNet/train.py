@@ -105,9 +105,14 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop'+str(args.crop)
-    snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
-    snapshot_path = snapshot_path + '_adam'+str(args.adam)
-    snapshot_path = snapshot_path + '_stb'+str(args.stb)
+    if args.add_cnn == 1:
+        snapshot_path = snapshot_path + '_add_cnn'+str(args.adam)
+
+    if args.adam == 1:
+        snapshot_path = snapshot_path + '_adam'+str(args.adam)
+
+    if args.stb == 1:
+        snapshot_path = snapshot_path + '_stb'+str(args.stb)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
