@@ -135,7 +135,7 @@ def trainer_university(args, model, snapshot_path):
     ce_loss = CrossEntropyLoss()
     dice_loss = DiceLoss(num_classes)
     if args.adam == 1:
-        optimizer = optim.Adam(model.parameters(), lr=base_lr)
+        optimizer = optim.Adam(model.parameters(), lr=base_lr, weight_decay=0.0001)
     else:
         optimizer = optim.SGD(model.parameters(), lr=base_lr, momentum=0.9, weight_decay=0.0001)
 
