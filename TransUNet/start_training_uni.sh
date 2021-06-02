@@ -1,9 +1,9 @@
 #!/bin/bash
-#SBATCH -J NN_TransUnet2
+#SBATCH -J NN_TransUnet_initial
 #SBATCH --partition=gpu
 #SBATCH --mem=32GB
-#SBATCH --nodelist=falcon5
-#SBATCH -t 20:00:00
+#SBATCH --nodelist=falcon4
+#SBATCH -t 10:00:00
 # your code goes below
 module load python-3.7.1
 source ../../../paper_replication/TransUNet/NNproject/bin/activate

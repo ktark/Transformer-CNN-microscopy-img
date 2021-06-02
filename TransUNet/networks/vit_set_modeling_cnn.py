@@ -177,41 +177,108 @@ class AdditionalCnn2(nn.Module):
         super(AdditionalCnn2, self).__init__()
 
         self.config = config
+        self.cnn1 = Conv2dReLU(in_channels=3,
+                               out_channels=32,
+                               kernel_size=3,
+                               stride=1,
+                               padding=0)
+        self.cnn2 = Conv2dReLU(in_channels=32,
+                               out_channels=64,
+                               kernel_size=5,
+                               stride=1,
+                               padding=0)
+        self.cnn3 = Conv2dReLU(in_channels=64,
+                               out_channels=128,
+                               kernel_size=7,
+                               stride=3,
+                               padding=1)
+
+        self.cnn4 = Conv2dReLU(in_channels=128,
+                               out_channels=256,
+                               kernel_size=7,
+                               stride=1,
+                               padding=1)
+        self.cnn5 = Conv2dReLU(in_channels=256,
+                               out_channels=512,
+                               kernel_size=1,
+                               stride=1,
+                               padding=0)
+        self.cnn6 = Conv2dReLU(in_channels=512,
+                               out_channels=512,
+                               kernel_size=5,
+                               stride=3,
+                               padding=1)
+        self.cnn7 = Conv2dReLU(in_channels=512,
+                               out_channels=512,
+                               kernel_size=7,
+                               stride=1,
+                               padding=0)
+        self.cnn8 = Conv2dReLU(in_channels=512,
+                               out_channels=config.hidden_size,
+                               kernel_size=3,
+                               stride=1,
+                               padding=0)
 
         # self.cnn1 = Conv2d(in_channels=3,
-        #                    out_channels=512,
+        #                     out_channels=64,
+        #                     kernel_size=3,
+        #                     stride=1,
+        #                     padding = 1)
+        # self.batchnorm1 = BatchNorm2d(64)
+        # self.relu1 = Conv2dReLU
+        # self.cnn2 = Conv2d(in_channels=128,
+        #                    out_channels=128,
+        #                    kernel_size=5,
+        #                    stride=3,
+        #                    padding=0)
+        # self.batchnorm2 = BatchNorm2d(128)
+        # self.cnn3 = Conv2d(in_channels=128,
+        #                    out_channels=128,
+        #                    kernel_size=7,
+        #                    stride=3,
+        #                    padding=1)
+        # self.batchnorm3 = BatchNorm2d(128)
+        # self.cnn4 = Conv2d(in_channels=128,
+        #                    out_channels=128,
+        #                    kernel_size=5,
+        #                    stride=1,
+        #                    padding=0)
+        # self.batchnorm4 = BatchNorm2d(128)
+        #
+        # self.cnn5 = Conv2d(in_channels=128,
+        #                    out_channels=128,
+        #                    kernel_size=5,
+        #                    stride=1,
+        #                    padding=0)
+        # self.batchnorm5 = BatchNorm2d(128)
+        #
+        # self.cnn6 = Conv2d(in_channels=128,
+        #                    out_channels=config.hidden_size,
         #                    kernel_size=3,
         #                    stride=1,
-        #                    padding = 1)
-        # self.maxpool1 = MaxPool2d(2, stride=2)
-        # self.batchnorm1 = BatchNorm2d(512)
-        # self.cnn2 = Conv2d(in_channels=512,
-        #                    out_channels=512,
-        #                    kernel_size=4,
-        #                    stride=2,
-        #                    padding=1)
-        # self.maxpool2 = MaxPool2d(2, stride=2)
-        # self.batchnorm2 = BatchNorm2d(512)
-        # self.cnn3 = Conv2d(in_channels=512,
-        #                    out_channels=512,
-        #                    kernel_size=4,
-        #                    stride=2,
-        #                    padding=1)
-        # self.batchnorm3 = BatchNorm2d(512)
-        self.resnetAddInput = ResNetV2(block_units=config.resnet.num_layers, width_factor=config.resnet.width_factor)
+        #                    padding=0)
+        # self.batchnorm6 = BatchNorm2d(config.hidden_size)
+
+        #self.resnetAddInput = ResNetV2(block_units=config.resnet.num_layers, width_factor=config.resnet.width_factor)
     def forward(self, x):
-        x, features = self.resnetAddInput(x)
+        #x, features = self.resnetAddInput(x)
         #print('AdditionalCNN input shape:',x.shape)
-        # x = self.cnn1(x)
-        # x = self.maxpool1(x)
-        # x = self.batchnorm1(x)
-        #
-        # x = self.cnn2(x)
-        # x = self.maxpool2(x)
-        # x = self.batchnorm2(x)
-        #
-        # x = self.cnn3(x)
-        # x = self.batchnorm3(x)
+        x = self.cnn1(x)
+        #print('cnn1:',x.shape)
+        x = self.cnn2(x)
+        #print('cnn2:',x.shape)
+        x = self.cnn3(x)
+        #print('cnn3:',x.shape)
+        x = self.cnn4(x)
+        #print('cnn4:',x.shape)
+        x = self.cnn5(x)
+        #print('cnn5:',x.shape)
+        x = self.cnn6(x)
+        #print('cnn6:', x.shape)
+        x = self.cnn7(x)
+        #print('cnn7:', x.shape)
+        x = self.cnn8(x)
+        #print('cnn8:', x.shape)
 
         return x
 
@@ -430,19 +497,19 @@ class DecoderCupAddCNN(nn.Module):
             use_batchnorm=True,
         )
         self.conv_more2 = Conv2dReLU(
-            1024,
-            head_channels,
+            256,
+            config.hidden_size,
             kernel_size=3,
             padding=1,
             use_batchnorm=True,
         )
-        self.conv_more3 = Conv2dReLU(
-            1024,
-            head_channels,
-            kernel_size=3,
-            padding=1,
-            use_batchnorm=False,
-        )
+        # self.conv_more3 = Conv2dReLU(
+        #     1024,
+        #     head_channels,
+        #     kernel_size=3,
+        #     padding=1,
+        #     use_batchnorm=False,
+        # )
 
         decoder_channels = config.decoder_channels
         in_channels = [head_channels] + list(decoder_channels[:-1])
@@ -468,19 +535,27 @@ class DecoderCupAddCNN(nn.Module):
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
 
         x1 = x1.permute(0, 2, 1)
-        x1 = x1.contiguous().view(B, hidden, h, w)
+        x1 = x1.contiguous().view(B, hidden, h, w) # B,
+        #print("x1 shape before conv", x1.shape)
+        #print("x2 shape before conv", x2.shape)
 
+        #x2 = self.conv_more2(x2)
+        #print("x2 shape after conv", x2.shape)
 
-        x1 = self.conv_more(x1)
-        #print('x1 shape:',x1.shape)
-        x2 = self.conv_more2(x2)
-        x = torch.cat([x1, x2], dim=1)
-        x = self.conv_more3(x)
+        #x = x1 + x2
+        x = torch.add(x2, x1, alpha=50)
+        #print("x1 shape before conv", x1.shape)
+        x = self.conv_more(x)
+
+        #print('x1 shape after conv:',x.shape)
+
+        #x = torch.cat([x1, x2], dim=1)
+        #x = self.conv_more3(x)
         #x2 = x2.permute(0, 1, 2, 3) #no permute
         #print('x2 shape:',x2.shape)
         #x2 = x2.contiguous().view(B, hidden, h, w)
 
-        #x = x1 + x2 #add the signal from CNN and transformer Bx512x14x14
+        # #add the signal from CNN and transformer Bx512x14x14
 
 
         for i, decoder_block in enumerate(self.blocks):
@@ -568,16 +643,16 @@ class VisionTransformer(nn.Module):
                         unit.load_from(res_weight, n_block=bname, n_unit=uname)
 
             #Additional CNN weights
-            self.additionalCnn.resnetAddInput.root.conv.weight.copy_(np2th(res_weight["conv_root/kernel"], conv=True))
-            gn_weight = np2th(res_weight["gn_root/scale"]).view(-1)
-            gn_bias = np2th(res_weight["gn_root/bias"]).view(-1)
-            self.additionalCnn.resnetAddInput.root.gn.weight.copy_(gn_weight)
-            self.additionalCnn.resnetAddInput.root.gn.bias.copy_(gn_bias)
-
-            for bname, block in self.additionalCnn.resnetAddInput.body.named_children():
-                for uname, unit in block.named_children():
-                    unit.load_from(res_weight, n_block=bname, n_unit=uname)
-
+            # self.additionalCnn.resnetAddInput.root.conv.weight.copy_(np2th(res_weight["conv_root/kernel"], conv=True))
+            # gn_weight = np2th(res_weight["gn_root/scale"]).view(-1)
+            # gn_bias = np2th(res_weight["gn_root/bias"]).view(-1)
+            # self.additionalCnn.resnetAddInput.root.gn.weight.copy_(gn_weight)
+            # self.additionalCnn.resnetAddInput.root.gn.bias.copy_(gn_bias)
+            #
+            # for bname, block in self.additionalCnn.resnetAddInput.body.named_children():
+            #     for uname, unit in block.named_children():
+            #         unit.load_from(res_weight, n_block=bname, n_unit=uname)
+            #
 
 
 CONFIGS = {
