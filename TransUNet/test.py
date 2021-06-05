@@ -14,6 +14,7 @@ from utils import test_single_volume
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
 from networks.vit_set_modeling_cnn import VisionTransformer as ViT_seg_add_cnn
 from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
+from networks.vit_set_modeling_cnn import VisionTransformerAddResNet as ViT_seg_add_resnet
 from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
 
 parser = argparse.ArgumentParser()
@@ -45,8 +46,15 @@ parser.add_argument('--crop', type=int,
                     default=1, help='whether to use random cropping, crops to img_size, overwrites resize')
 parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
+parser.add_argument('--pretrain_add_resnet', type=int,
+                    default=0, help='Use pretrained weights for additional Resnet to bottleneck')
+parser.add_argument('--add_cnn', type=int,
+                    default=0, help='if to use model with additional CNN from input to bottleneck. Value 1 for custom CNN, value 2 for additional Resnet')
 parser.add_argument('--stb', type=int,
                     default=0, help='Resnet skip connection to bottleneck')
+
+
+
 args = parser.parse_args()
 
 
@@ -132,12 +140,14 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop' + str(args.crop)
-    if args.add_cnn == 1:
+    if args.add_cnn == 1 or args.add_cnn == 2:
         snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
     if args.adam == 1:
         snapshot_path = snapshot_path + '_adam'+str(args.adam)
     if args.stb == 1:
         snapshot_path = snapshot_path + '_stb'+str(args.stb)
+    if args.pretrain_add_resnet == 1:
+        snapshot_path = snapshot_path + '_pretrain_add_resnet'+str(args.pretrain_add_resnet)
 
     config_vit = CONFIGS_ViT_seg[args.vit_name]
     config_vit.n_classes = args.num_classes
@@ -145,7 +155,11 @@ if __name__ == "__main__":
     config_vit.patches.size = (args.vit_patches_size, args.vit_patches_size)
     if args.vit_name.find('R50') !=-1:
         config_vit.patches.grid = (int(args.img_size/args.vit_patches_size), int(args.img_size/args.vit_patches_size))
-    if args.stb == 1:
+    if args.add_cnn == 1:
+        net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    elif args.add_cnn ==2:
+        net = ViT_seg_add_resnet(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    elif args.stb == 1:
         net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
     else:
         net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()

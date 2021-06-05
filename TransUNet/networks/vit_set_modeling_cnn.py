@@ -169,12 +169,12 @@ class Embeddings(nn.Module):
         return embeddings, features
 
 
-#additional CNN from input to bottleneck version 2
-class AdditionalCnn2(nn.Module):
+#additional CNN from input to bottleneck version 3
+class AdditionalCnn(nn.Module):
     """Construct CNN
     """
     def __init__(self, config, img_size, in_channels=3):
-        super(AdditionalCnn2, self).__init__()
+        super(AdditionalCnn, self).__init__()
 
         self.config = config
         self.cnn1 = Conv2dReLU(in_channels=3,
@@ -192,7 +192,6 @@ class AdditionalCnn2(nn.Module):
                                kernel_size=7,
                                stride=3,
                                padding=1)
-
         self.cnn4 = Conv2dReLU(in_channels=128,
                                out_channels=256,
                                kernel_size=7,
@@ -219,69 +218,30 @@ class AdditionalCnn2(nn.Module):
                                stride=1,
                                padding=0)
 
-        # self.cnn1 = Conv2d(in_channels=3,
-        #                     out_channels=64,
-        #                     kernel_size=3,
-        #                     stride=1,
-        #                     padding = 1)
-        # self.batchnorm1 = BatchNorm2d(64)
-        # self.relu1 = Conv2dReLU
-        # self.cnn2 = Conv2d(in_channels=128,
-        #                    out_channels=128,
-        #                    kernel_size=5,
-        #                    stride=3,
-        #                    padding=0)
-        # self.batchnorm2 = BatchNorm2d(128)
-        # self.cnn3 = Conv2d(in_channels=128,
-        #                    out_channels=128,
-        #                    kernel_size=7,
-        #                    stride=3,
-        #                    padding=1)
-        # self.batchnorm3 = BatchNorm2d(128)
-        # self.cnn4 = Conv2d(in_channels=128,
-        #                    out_channels=128,
-        #                    kernel_size=5,
-        #                    stride=1,
-        #                    padding=0)
-        # self.batchnorm4 = BatchNorm2d(128)
-        #
-        # self.cnn5 = Conv2d(in_channels=128,
-        #                    out_channels=128,
-        #                    kernel_size=5,
-        #                    stride=1,
-        #                    padding=0)
-        # self.batchnorm5 = BatchNorm2d(128)
-        #
-        # self.cnn6 = Conv2d(in_channels=128,
-        #                    out_channels=config.hidden_size,
-        #                    kernel_size=3,
-        #                    stride=1,
-        #                    padding=0)
-        # self.batchnorm6 = BatchNorm2d(config.hidden_size)
 
-        #self.resnetAddInput = ResNetV2(block_units=config.resnet.num_layers, width_factor=config.resnet.width_factor)
     def forward(self, x):
-        #x, features = self.resnetAddInput(x)
-        #print('AdditionalCNN input shape:',x.shape)
         x = self.cnn1(x)
-        #print('cnn1:',x.shape)
         x = self.cnn2(x)
-        #print('cnn2:',x.shape)
         x = self.cnn3(x)
-        #print('cnn3:',x.shape)
         x = self.cnn4(x)
-        #print('cnn4:',x.shape)
         x = self.cnn5(x)
-        #print('cnn5:',x.shape)
         x = self.cnn6(x)
-        #print('cnn6:', x.shape)
         x = self.cnn7(x)
-        #print('cnn7:', x.shape)
         x = self.cnn8(x)
-        #print('cnn8:', x.shape)
-
         return x
 
+
+#additional ResNet from input to bottleneck
+class AdditionalResNet(nn.Module):
+
+    def __init__(self, config, img_size, in_channels=3):
+        super(AdditionalResNet, self).__init__()
+        self.config = config
+        self.resnetAddInput = ResNetV2(block_units=config.resnet.num_layers, width_factor=config.resnet.width_factor) #same parameters as in encoder
+
+    def forward(self, x):
+        x, _ = self.resnetAddInput(x)
+        return x
 
 class Block(nn.Module):
     def __init__(self, config, vis):
@@ -363,6 +323,17 @@ class Encoder(nn.Module):
 
 
 class Transformer(nn.Module):
+    def __init__(self, config, img_size, vis):
+        super(Transformer, self).__init__()
+        self.embeddings = Embeddings(config, img_size=img_size) # size (B, n_path, hidden) ?
+        self.encoder = Encoder(config, vis)
+
+    def forward(self, input_ids):
+        embedding_output, features = self.embeddings(input_ids)
+        encoded, attn_weights = self.encoder(embedding_output)  # (B, n_patch, hidden)
+        return encoded, attn_weights, features
+
+class TransformerLink(nn.Module):
     def __init__(self, config, img_size, vis):
         super(Transformer, self).__init__()
         self.embeddings = Embeddings(config, img_size=img_size) # size (B, n_path, hidden) ?
@@ -470,7 +441,6 @@ class DecoderCup(nn.Module):
         self.blocks = nn.ModuleList(blocks)
 
     def forward(self, hidden_states, features=None):
-        #print('DecoderCup hidden state size:', hidden_states.shape)
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
         x = hidden_states.permute(0, 2, 1)
@@ -496,20 +466,6 @@ class DecoderCupAddCNN(nn.Module):
             padding=1,
             use_batchnorm=True,
         )
-        self.conv_more2 = Conv2dReLU(
-            256,
-            config.hidden_size,
-            kernel_size=3,
-            padding=1,
-            use_batchnorm=True,
-        )
-        # self.conv_more3 = Conv2dReLU(
-        #     1024,
-        #     head_channels,
-        #     kernel_size=3,
-        #     padding=1,
-        #     use_batchnorm=False,
-        # )
 
         decoder_channels = config.decoder_channels
         in_channels = [head_channels] + list(decoder_channels[:-1])
@@ -529,34 +485,71 @@ class DecoderCupAddCNN(nn.Module):
         self.blocks = nn.ModuleList(blocks)
 
     def forward(self, x1, x2, features=None):
-        hidden_states = x1 #torch.cat([x1, x2], dim = 2)
+        hidden_states = x1
 
         B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
         h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
 
         x1 = x1.permute(0, 2, 1)
         x1 = x1.contiguous().view(B, hidden, h, w) # B,
-        #print("x1 shape before conv", x1.shape)
-        #print("x2 shape before conv", x2.shape)
 
-        #x2 = self.conv_more2(x2)
-        #print("x2 shape after conv", x2.shape)
-
-        #x = x1 + x2
         x = torch.add(x2, x1, alpha=50)
-        #print("x1 shape before conv", x1.shape)
         x = self.conv_more(x)
 
-        #print('x1 shape after conv:',x.shape)
+        for i, decoder_block in enumerate(self.blocks):
+            if features is not None:
+                skip = features[i] if (i < self.config.n_skip) else None
+            else:
+                skip = None
+            x = decoder_block(x, skip=skip)
+        return x
 
-        #x = torch.cat([x1, x2], dim=1)
-        #x = self.conv_more3(x)
-        #x2 = x2.permute(0, 1, 2, 3) #no permute
-        #print('x2 shape:',x2.shape)
-        #x2 = x2.contiguous().view(B, hidden, h, w)
+class DecoderCupAddResNet(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.config = config
+        head_channels = 512
+        self.conv_more = Conv2dReLU(
+            config.hidden_size,
+            head_channels,
+            kernel_size=3,
+            padding=1,
+            use_batchnorm=True,
+        )
+        self.conv_more2 = Conv2dReLU(
+            1024,
+            config.hidden_size,
+            kernel_size=3,
+            padding=1,
+            use_batchnorm=True,
+        )
 
-        # #add the signal from CNN and transformer Bx512x14x14
+        decoder_channels = config.decoder_channels
+        in_channels = [head_channels] + list(decoder_channels[:-1])
+        out_channels = decoder_channels
 
+        if self.config.n_skip != 0:
+            skip_channels = self.config.skip_channels
+            for i in range(4 - self.config.n_skip):  # re-select the skip channels according to n_skip
+                skip_channels[3 - i] = 0
+        else:
+            skip_channels = [0, 0, 0, 0]
+        blocks = [
+            DecoderBlock(in_ch, out_ch, sk_ch) for in_ch, out_ch, sk_ch in zip(in_channels, out_channels, skip_channels)
+        ]
+        self.blocks = nn.ModuleList(blocks)
+
+    def forward(self, x1, x2, features=None):
+        hidden_states = x1
+
+        B, n_patch, hidden = hidden_states.size()  # reshape from (B, n_patch, hidden) to (B, h, w, hidden)
+        h, w = int(np.sqrt(n_patch)), int(np.sqrt(n_patch))
+
+        x1 = x1.permute(0, 2, 1)
+        x1 = x1.contiguous().view(B, hidden, h, w)  # B,
+        x2 = self.conv_more2(x2)
+        x = torch.add(x1, x2, alpha=50)
+        x = self.conv_more(x)
 
         for i, decoder_block in enumerate(self.blocks):
             if features is not None:
@@ -567,13 +560,15 @@ class DecoderCupAddCNN(nn.Module):
         return x
 
 class VisionTransformer(nn.Module):
-    def __init__(self, config, img_size=224, num_classes=21843, zero_head=False, vis=False):
+    def __init__(self, config, img_size=224, num_classes=21843, zero_head=False, vis=False, pretrainAddResNet=0):
         super(VisionTransformer, self).__init__()
         self.num_classes = num_classes
         self.zero_head = zero_head
         self.classifier = config.classifier
         self.transformer = Transformer(config, img_size, vis)
-        self.additionalCnn = AdditionalCnn2(config, img_size) #additional cnn
+        self.additionalCnn = AdditionalCnn(config, img_size) #additional cnn
+        self.pretrainAddResNet = pretrainAddResNet
+
         self.decoder = DecoderCupAddCNN(config) #new decoder
         self.segmentation_head = SegmentationHead(
             in_channels=config['decoder_channels'][-1],
@@ -586,9 +581,7 @@ class VisionTransformer(nn.Module):
         if x.size()[1] == 1:
             x = x.repeat(1,3,1,1)
         x2 = self.additionalCnn(x)
-        #print('Additional CNN output sizes:', x2.shape)
         x, attn_weights, features = self.transformer(x)  # (B, n_patch, hidden)
-        #print('Resnet transformed output sizes:', x.shape)
         x = self.decoder(x, x2, features)
         logits = self.segmentation_head(x)
         return logits
@@ -642,18 +635,43 @@ class VisionTransformer(nn.Module):
                     for uname, unit in block.named_children():
                         unit.load_from(res_weight, n_block=bname, n_unit=uname)
 
-            #Additional CNN weights
-            # self.additionalCnn.resnetAddInput.root.conv.weight.copy_(np2th(res_weight["conv_root/kernel"], conv=True))
-            # gn_weight = np2th(res_weight["gn_root/scale"]).view(-1)
-            # gn_bias = np2th(res_weight["gn_root/bias"]).view(-1)
-            # self.additionalCnn.resnetAddInput.root.gn.weight.copy_(gn_weight)
-            # self.additionalCnn.resnetAddInput.root.gn.bias.copy_(gn_bias)
-            #
-            # for bname, block in self.additionalCnn.resnetAddInput.body.named_children():
-            #     for uname, unit in block.named_children():
-            #         unit.load_from(res_weight, n_block=bname, n_unit=uname)
-            #
+            if self.pretrainAddResNet==1:
+                #Additional ResNet CNN weights
+                self.additionalCnn.resnetAddInput.root.conv.weight.copy_(np2th(res_weight["conv_root/kernel"], conv=True))
+                gn_weight = np2th(res_weight["gn_root/scale"]).view(-1)
+                gn_bias = np2th(res_weight["gn_root/bias"]).view(-1)
+                self.additionalCnn.resnetAddInput.root.gn.weight.copy_(gn_weight)
+                self.additionalCnn.resnetAddInput.root.gn.bias.copy_(gn_bias)
 
+                for bname, block in self.additionalCnn.resnetAddInput.body.named_children():
+                    for uname, unit in block.named_children():
+                        unit.load_from(res_weight, n_block=bname, n_unit=uname)
+
+
+class VisionTransformerAddResNet(VisionTransformer):
+    def __init__(self, config, img_size=224, num_classes=21843, zero_head=False, vis=False):
+        super(VisionTransformer, self).__init__()
+        self.num_classes = num_classes
+        self.zero_head = zero_head
+        self.classifier = config.classifier
+        self.transformer = Transformer(config, img_size, vis)
+        self.additionalCnn = AdditionalResNet(config, img_size)  # additional Resnet
+        self.decoder = DecoderCupAddResNet(config)  # new decoder
+        self.segmentation_head = SegmentationHead(
+            in_channels=config['decoder_channels'][-1],
+            out_channels=config['n_classes'],
+            kernel_size=3,
+        )
+        self.config = config
+
+    def forward(self, x):
+        if x.size()[1] == 1:
+            x = x.repeat(1, 3, 1, 1)
+        x2 = self.additionalCnn(x)
+        x, attn_weights, features = self.transformer(x)  # (B, n_patch, hidden)
+        x = self.decoder(x, x2, features)
+        logits = self.segmentation_head(x)
+        return logits
 
 CONFIGS = {
     'ViT-B_16': configs.get_b16_config(),
