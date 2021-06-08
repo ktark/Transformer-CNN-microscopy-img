@@ -6,10 +6,9 @@ import numpy as np
 import torch
 import torch.backends.cudnn as cudnn
 from networks.vit_seg_modeling import VisionTransformer as ViT_seg
-from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
-from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
-from networks.vit_set_modeling_cnn import VisionTransformer as ViT_seg_add_cnn
-from networks.vit_set_modeling_cnn import VisionTransformerAddResNet as ViT_seg_add_resnet
+from networks.vit_seg_modeling_transformer_in_skip import VisionTransformerExtended as ViTX_seg
+from networks.vit_seg_modeling_transformer_in_skip import CONFIGS as CONFIGS_ViT_seg
+
 
 from trainer import trainer_synapse, trainer_university
 
@@ -39,6 +38,8 @@ parser.add_argument('--seed', type=int,
                     default=1234, help='random seed')
 parser.add_argument('--n_skip', type=int,
                     default=3, help='using number of skip-connect, default is num')
+parser.add_argument('--n_transformer', type=int,
+                    default=1, help='using number of transformer blocks in skip connections, default is num')
 parser.add_argument('--vit_name', type=str,
                     default='R50-ViT-B_16', help='select one vit model')
 parser.add_argument('--vit_patches_size', type=int,
@@ -47,12 +48,6 @@ parser.add_argument('--crop', type=int,
                     default=0, help='whether to use random cropping, crops to img_size, overwrites resize')
 parser.add_argument('--adam', type=int,
                     default=0, help='adam instead of SGD for training')
-parser.add_argument('--add_cnn', type=int,
-                    default=0, help='if to use model with additional CNN from input to bottleneck. Value 1 for custom CNN, value 2 for additional Resnet')
-parser.add_argument('--pretrain_add_resnet', type=int,
-                    default=0, help='If ResNet used as additional CNN then 1 for using pretrained weights')
-parser.add_argument('--stb', type=int,
-                    default=0, help='Resnet skip connection to bottleneck')
 parser.add_argument('--amp', type=int,
                     default=0, help='toggle automatic mixed proccessing (AMP) for training')
 
@@ -109,32 +104,27 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop'+str(args.crop)
-    if args.add_cnn == 1 or args.add_cnn == 2:
-        snapshot_path = snapshot_path + '_add_cnn'+str(args.add_cnn)
+
+    if args.vit_name == 'R50-ViT-Skip-B_16':
+        snapshot_path = snapshot_path + '_transformer' + str(args.n_transformer)
 
     if args.adam == 1:
         snapshot_path = snapshot_path + '_adam'+str(args.adam)
-
-    if args.stb == 1:
-        snapshot_path = snapshot_path + '_stb'+str(args.stb)
-
-    if args.pretrain_add_resnet == 1:
-        snapshot_path = snapshot_path + '_pretrain_add_resnet'+str(args.pretrain_add_resnet)
 
     if not os.path.exists(snapshot_path):
         os.makedirs(snapshot_path)
     config_vit = CONFIGS_ViT_seg[args.vit_name]
     config_vit.n_classes = args.num_classes
     config_vit.n_skip = args.n_skip
+    
     if args.vit_name.find('R50') != -1:
         config_vit.patches.grid = (int(args.img_size / args.vit_patches_size), int(args.img_size / args.vit_patches_size))
-    if args.add_cnn == 1:
-        net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
-    elif args.add_cnn ==2:
-        net = ViT_seg_add_resnet(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes, pretrainAddResNet = 1).cuda()
-    elif args.stb == 1:
-        net = ViT_seg_res_skip(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
-    else:
+    
+    if args.vit_name == 'R50-ViT-Skip-B_16':
+        config_vit.n_transformer = args.n_transformer
+        config_vit.transformer.num_layers = 12 // (2 * args.n_transformer)
+        net = ViTX_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    elif args.vit_name == 'R50-ViT-B_16':
         net = ViT_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
 
     net.load_from(weights=np.load(config_vit.pretrained_path))
@@ -142,5 +132,5 @@ if __name__ == "__main__":
     trainer = {'Synapse': trainer_synapse,
                'University_dev': trainer_university,
                'University': trainer_university}
-
+    
     trainer[dataset_name](args, net, snapshot_path)
