@@ -39,6 +39,7 @@ def get_testing():
     config.representation_size = None
     return config
 
+
 def get_r50_b16_config():
     """Returns the Resnet50 + ViT-B/16 configuration."""
     config = get_b16_config()
@@ -54,6 +55,15 @@ def get_r50_b16_config():
     config.n_classes = 2
     config.n_skip = 3
     config.activation = 'softmax'
+
+    return config
+
+def get_r50_b16_skip_config():
+    """Returns the Resnet50 + ViT-B/16 with Transformer block moved to skip connections configuration."""
+    config = get_r50_b16_config()
+    
+    config.patch_sizes = [8, 4, 2]
+    config.n_transformer = 3
 
     return config
 
