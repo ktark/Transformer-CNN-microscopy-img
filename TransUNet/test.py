@@ -15,7 +15,8 @@ from networks.vit_seg_modeling import VisionTransformer as ViT_seg
 from networks.vit_set_modeling_cnn import VisionTransformer as ViT_seg_add_cnn
 from networks.vit_seg_modeling import VisionTransformerResSkip as ViT_seg_res_skip
 from networks.vit_set_modeling_cnn import VisionTransformerAddResNet as ViT_seg_add_resnet
-from networks.vit_seg_modeling import CONFIGS as CONFIGS_ViT_seg
+from networks.vit_seg_modeling_transformer_in_skip import VisionTransformerExtended as ViTX_seg
+from networks.vit_seg_modeling_transformer_in_skip import CONFIGS as CONFIGS_ViT_seg
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--volume_path', type=str,
@@ -35,6 +36,8 @@ parser.add_argument('--img_size', type=int, default=224, help='input patch size 
 parser.add_argument('--is_savenii', action="store_true", help='whether to save results during inference')
 
 parser.add_argument('--n_skip', type=int, default=3, help='using number of skip-connect, default is num')
+parser.add_argument('--n_transformer', type=int,
+                    default=1, help='using number of transformer blocks in skip connections, default is num')
 parser.add_argument('--vit_name', type=str, default='ViT-B_16', help='select one vit model')
 
 parser.add_argument('--test_save_dir', type=str, default='../predictions', help='saving prediction as nii!')
@@ -140,6 +143,9 @@ if __name__ == "__main__":
     snapshot_path = snapshot_path + '_'+str(args.img_size)
     snapshot_path = snapshot_path + '_s'+str(args.seed) if args.seed!=1234 else snapshot_path
     snapshot_path = snapshot_path + '_crop' + str(args.crop)
+	
+    if args.vit_name == 'R50-ViT-Skip-B_16':
+        snapshot_path = snapshot_path + '_transformer' + str(args.n_transformer)
     if args.add_cnn == 1 or args.add_cnn == 2:
         snapshot_path = snapshot_path + '_add_cnn' + str(args.add_cnn)
     if args.adam == 1:
@@ -153,9 +159,14 @@ if __name__ == "__main__":
     config_vit.n_classes = args.num_classes
     config_vit.n_skip = args.n_skip
     config_vit.patches.size = (args.vit_patches_size, args.vit_patches_size)
+
     if args.vit_name.find('R50') !=-1:
         config_vit.patches.grid = (int(args.img_size/args.vit_patches_size), int(args.img_size/args.vit_patches_size))
-    if args.add_cnn == 1:
+    if args.vit_name == 'R50-ViT-Skip-B_16':
+        config_vit.n_transformer = args.n_transformer
+        config_vit.transformer.num_layers = 12 // (2 * args.n_transformer)
+        net = ViTX_seg(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
+    elif args.add_cnn == 1:
         net = ViT_seg_add_cnn(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
     elif args.add_cnn ==2:
         net = ViT_seg_add_resnet(config_vit, img_size=args.img_size, num_classes=config_vit.n_classes).cuda()
@@ -166,6 +177,7 @@ if __name__ == "__main__":
 
     snapshot = os.path.join(snapshot_path, 'best_model.pth')
     if not os.path.exists(snapshot): snapshot = snapshot.replace('best_model', 'epoch_'+str(args.max_epochs-1))
+    print(snapshot)
     net.load_state_dict(torch.load(snapshot))
     snapshot_name = snapshot_path.split('/')[-1]
 
