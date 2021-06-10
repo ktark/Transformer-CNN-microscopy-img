@@ -199,7 +199,7 @@ class AdditionalCnn(nn.Module):
                                padding=1)
         self.cnn5 = Conv2dReLU(in_channels=256,
                                out_channels=512,
-                               kernel_size=1,
+                               kernel_size=3,
                                stride=1,
                                padding=0)
         self.cnn6 = Conv2dReLU(in_channels=512,
