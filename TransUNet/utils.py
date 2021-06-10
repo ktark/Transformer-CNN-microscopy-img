@@ -64,9 +64,12 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
     image, label = image.squeeze(0).cpu().detach().numpy(), label.squeeze(0).cpu().detach().numpy()
     if len(image.shape) == 3:
         prediction = np.zeros_like(label)
+        class_probability = np.zeros_like(label, dtype=float)
         for ind in range(image.shape[0]):
             if cropping == 1:
                 preds = []
+                class_nr = 1
+                class_probs = []
                 crops = []
                 slice_big = image[ind, :, :]
                 x, y = slice_big.shape[0], slice_big.shape[1]
@@ -82,11 +85,16 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
                         net.eval()
                         with torch.no_grad():
                             outputs = net(input)
-                            out = torch.argmax(torch.softmax(outputs, dim=1), dim=1).squeeze(0)
+                            softmax_out = torch.softmax(outputs, dim=1)
+                            class_prob = (softmax_out[:,class_nr,:,:]).squeeze(0)
+                            class_prob = class_prob.cpu().detach().numpy()
+                            out = torch.argmax(softmax_out, dim=1).squeeze(0)
                             out = out.cpu().detach().numpy()
+                            class_probs.append(class_prob)
                             preds.append(out)
 
                 pred = np.zeros([x, y])
+                prob = np.zeros([x, y])
                 coverage = np.zeros([x, y])
                 for i, crop in enumerate(crops):
                     x_crop, y_crop = crop
@@ -94,16 +102,22 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
                     mask = coverage[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] > 0  # overlap mask
                     if np.sum(mask) > 0:
                         current_pred = preds[i]
+                        current_prob = class_probs[i]
+
                         overlap_pred = pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]][mask]
+                        overlap_prob = prob[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]][mask]
+
                         current_pred[mask][overlap_pred != current_pred[mask]] = 0  # where they don't agree it's 0
+
                         pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = current_pred
+                        prob[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = current_prob
+
                     else:
                         pred[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = preds[i]
-
+                        prob[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] = class_probs[i]
                     coverage[x_crop:x_crop + patch_size[0], y_crop:y_crop + patch_size[1]] += 1
-
                 prediction[ind] = pred
-
+                class_probability[ind] = prob
             else:
                 slice = image[ind, :, :]
                 x, y = slice.shape[0], slice.shape[1]
@@ -135,10 +149,15 @@ def test_single_volume(image, label, net, classes, patch_size=None, test_save_pa
         img_itk = sitk.GetImageFromArray(image.astype(np.float32))
         prd_itk = sitk.GetImageFromArray(prediction.astype(np.float32))
         lab_itk = sitk.GetImageFromArray(label.astype(np.float32))
+        prob_itk = sitk.GetImageFromArray(class_probability.astype(np.float32))
         img_itk.SetSpacing((1, 1, z_spacing))
         prd_itk.SetSpacing((1, 1, z_spacing))
         lab_itk.SetSpacing((1, 1, z_spacing))
+        prob_itk.SetSpacing((1, 1, z_spacing))
+
         sitk.WriteImage(prd_itk, test_save_path + '/'+case + "_pred.nii.gz")
         sitk.WriteImage(img_itk, test_save_path + '/'+ case + "_img.nii.gz")
         sitk.WriteImage(lab_itk, test_save_path + '/'+ case + "_gt.nii.gz")
+        sitk.WriteImage(prob_itk, test_save_path + '/'+ case + "_class_prob.nii.gz")
+
     return metric_list

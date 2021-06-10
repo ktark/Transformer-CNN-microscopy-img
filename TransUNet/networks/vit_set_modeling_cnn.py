@@ -493,7 +493,7 @@ class DecoderCupAddCNN(nn.Module):
         x1 = x1.permute(0, 2, 1)
         x1 = x1.contiguous().view(B, hidden, h, w) # B,
 
-        x = torch.add(x2, x1, alpha=50)
+        x = torch.add(x1, x2, alpha=50)
         x = self.conv_more(x)
 
         for i, decoder_block in enumerate(self.blocks):
