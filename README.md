@@ -1,4 +1,4 @@
-# TransUNet project (UT project - NN)
+# Transformers and CNN in analyzing microscopy images
 
 * python 3.7 virtual environment [https://docs.hpc.ut.ee/cluster/python_envs/](https://docs.hpc.ut.ee/cluster/python_envs/). Install all requirements  `pip install -r requirements.txt`
 * Running HPC with gpu: Use `TransUNet/start_*.sh` scripts. 
